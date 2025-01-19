@@ -321,7 +321,7 @@ GameObject:
   - component: {fileID: 2060768824}
   - component: {fileID: 2060768823}
   m_Layer: 0
-  m_Name: Bubble
+  m_Name: Circle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -339,17 +339,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4c82c35fad3f0d5468991bb73f40c5c7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 2
-  inflateRate: 0.6
-  shrinkRate: 0.1
-  minSize: 0.1
-  sizeFactor: 3
-  minSpeed: 1
-  maxSpeed: 5
-  blowForce: 50
-  wobbleFrequency: 1
-  wobbleAmplitude: 0.3
-  inertiaDampening: 0.99
+  speed: 1
 --- !u!212 &2060768824
 SpriteRenderer:
   m_ObjectHideFlags: 0
