@@ -28,6 +28,7 @@ namespace MarkFramework
 			FindChildrenControl<ScrollRect>();
 			FindChildrenControl<InputField>();
 			FindChildrenControl<TextMeshProUGUI>();
+			FindChildrenControl<TMP_InputField>();
 		}
 		
 		/// <summary>
