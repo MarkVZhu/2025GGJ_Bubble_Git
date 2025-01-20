@@ -4,24 +4,36 @@ using UnityEngine;
 
 public class BubbleMovement : MonoBehaviour
 {
-    public float speed = 2f;
+    [Header("Bubble Size Settings")]
     public float inflateRate = 0.6f; // Rate at which the bubble inflates
     public float shrinkRate = 0.1f; // Rate at which the bubble shrinks
-    public float minSize = 0.1f; // Minimum size of the bubble
+    public float minSize = 0.3f; // Minimum size of the bubble
+    public float maxSize = 1.5f; // Maximum size of the bubble
+    public float warningThreshold = 0.7f; // Warning threshold as a percentage of max and min size
+
+    [Header("Bubble Movement Settings")]
+    public float speed = 1f;
     public float sizeFactor = 3f; // Factor affecting speed based on size
     public float minSpeed = 1f; // Minimum speed of the bubble
     public float maxSpeed = 5f; // Maximum speed of the bubble
     public float blowForce = 50f; // Force applied when blowing the bubble
+
+    [Header("Bubble Wobble Settings")]
     public float wobbleFrequency = 1f; // Frequency of the wobble effect
     public float wobbleAmplitude = 0.3f; // Amplitude of the wobble effect
+
+    [Header("Physics Settings")]
     public float inertiaDampening = 0.99f; // Factor to dampen the inertia over time
 
+    [Header("Debug Info")]
     [SerializeField] private float currentSpeed; // Current speed visible in the inspector
+    [SerializeField] private float currentSize; // Current size visible in the inspector
 
     private Transform bubbleTransform;
     private Vector3 wobbleOffset;
     private Vector3 velocity; // Stores the current velocity for inertia
     private float wobbleTime;
+    private bool hasPopped = false; // Tracks if the bubble has popped
 
     void Start()
     {
@@ -48,10 +60,44 @@ public class BubbleMovement : MonoBehaviour
         else
         {
             bubbleTransform.localScale -= Vector3.one * shrinkRate * Time.deltaTime;
+        }
 
-            // Clamp the size to the minimum size
-            if (bubbleTransform.localScale.x < minSize)
-                bubbleTransform.localScale = Vector3.one * minSize;
+        // Update currentSize for debugging
+        currentSize = bubbleTransform.localScale.x;
+
+        // Calculate consistent warning offset
+        float warningOffset = (maxSize - minSize) * (1f - warningThreshold);
+
+        // Clamp the size to prevent exceeding maxSize or dropping below minSize
+        if (bubbleTransform.localScale.x >= maxSize)
+        {
+            bubbleTransform.localScale = Vector3.one * maxSize;
+            ChangeBubbleColor(Color.red); // Bubble pops when max size is reached
+            if (!hasPopped)
+            {
+                Debug.Log("Bubble popped due to exceeding max size.");
+                hasPopped = true;
+            }
+        }
+        else if (bubbleTransform.localScale.x <= minSize)
+        {
+            bubbleTransform.localScale = Vector3.one * minSize;
+            ChangeBubbleColor(Color.red); // Bubble pops when min size is reached
+            if (!hasPopped)
+            {
+                Debug.Log("Bubble popped due to falling below min size.");
+                hasPopped = true;
+            }
+        }
+        else if (bubbleTransform.localScale.x >= maxSize - warningOffset || bubbleTransform.localScale.x <= minSize + warningOffset)
+        {
+            ChangeBubbleColor(Color.yellow); // Warning color
+            hasPopped = false; // Reset pop state during warning
+        }
+        else
+        {
+            ChangeBubbleColor(Color.white); // Default color
+            hasPopped = false; // Reset pop state during normal conditions
         }
 
         // Adjust speed based on size (smaller bubbles float faster)
@@ -87,6 +133,15 @@ public class BubbleMovement : MonoBehaviour
         {
             // Move the bubble upward with inertia and wobble effect
             velocity += Vector3.up * currentSpeed * Time.deltaTime;
+        }
+    }
+
+    private void ChangeBubbleColor(Color color)
+    {
+        SpriteRenderer bubbleRenderer = GetComponent<SpriteRenderer>();
+        if (bubbleRenderer != null)
+        {
+            bubbleRenderer.color = color;
         }
     }
 }
