@@ -7,7 +7,7 @@ public class ProgressTracker : MonoBehaviour
     public float unitsPerPoint = 5f; // Distance in units required to gain one point
     public TextMeshProUGUI scoreText; // TextMeshProUGUI to display the score
 
-    private int score = 0; // Current score
+    public int score = 0; // Current score
     private float lastScoreY; // Tracks the Y position where the last score increment occurred
 
     void Start()

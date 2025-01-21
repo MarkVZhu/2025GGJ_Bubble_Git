@@ -4,6 +4,10 @@ using UnityEngine;
 
 public class Obstacles : MonoBehaviour
 {
+    [Header("Spawn Level Settings")]
+    public int minSpawnLevel = 1; // Minimum difficulty level required for this obstacle to spawn
+    public int maxSpawnLevel = 10; // Maximum difficulty level for this obstacle to spawn
+
     private bool hasCollided = false; // Tracks if the collision has already been logged
 
     void OnTriggerEnter2D(Collider2D other)

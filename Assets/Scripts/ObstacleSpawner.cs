@@ -4,22 +4,36 @@ using UnityEngine;
 
 public class ObstacleSpawner : MonoBehaviour
 {
+    [Header("Camera Reference")]
+    public Transform cameraTransform; // Reference to the main camera
+
     [Header("Obstacle Lists")]
     public List<GameObject> leftLaneObstacles; // Obstacles for the left lane
     public List<GameObject> centerLaneObstacles; // Obstacles for the center lane
     public List<GameObject> rightLaneObstacles; // Obstacles for the right lane
+
+    [Header("Game Progression")]
+    public int difficultyLevel = 0; // Tracks the current difficulty level
+    public int mediumModeThreshold = 5; // Score threshold to switch to medium mode
+    public int hardModeThreshold = 15; // Score threshold to switch to hard mode
+    public int scoreThreshold = 15; // Score threshold to increase difficulty level
 
     [Header("Difficulty Modes")]
     public bool easy = true;
     public bool medium = false;
     public bool hard = false;
 
-    [Header("Spawn Timing Settings")]
-    public float minSpawnInterval = 3f; // Minimum time between spawns
-    public float maxSpawnInterval = 6f; // Maximum time between spawns
+    [Header("Spawn Timing Settings - Easy")]
+    public float easyMinSpawnInterval = 4f; // Minimum time between spawns for easy mode
+    public float easyMaxSpawnInterval = 8f; // Maximum time between spawns for easy mode
 
-    [Header("Camera Reference")]
-    public Transform cameraTransform; // Reference to the main camera
+    [Header("Spawn Timing Settings - Medium")]
+    public float mediumMinSpawnInterval = 3f; // Minimum time between spawns for medium mode
+    public float mediumMaxSpawnInterval = 7f; // Maximum time between spawns for medium mode
+
+    [Header("Spawn Timing Settings - Hard")]
+    public float hardMinSpawnInterval = 2f; // Minimum time between spawns for hard mode
+    public float hardMaxSpawnInterval = 6f; // Maximum time between spawns for hard mode
 
     [Header("Debugging")]
     public float leftTimer = 0f;
@@ -32,6 +46,10 @@ public class ObstacleSpawner : MonoBehaviour
     private bool firstObstacleSpawned = false; // Track if the first obstacle has been spawned
     private Vector3 lastCameraPosition; // Tracks the last position of the camera
 
+    private ProgressTracker progressTracker; // Reference to the ProgressTracker script
+
+    public float timerMinSpeedThreshold = 0.1f; // Minimum speed to keep the timer running
+
     void Start()
     {
         // Dynamically calculate screen bounds based on the camera
@@ -43,37 +61,67 @@ public class ObstacleSpawner : MonoBehaviour
         SpawnSingleLaneObstacle();
         firstObstacleSpawned = true;
 
-        // Randomize initial timers
-        leftTimer = Random.Range(minSpawnInterval, maxSpawnInterval);
-        centerTimer = Random.Range(minSpawnInterval, maxSpawnInterval);
-        rightTimer = Random.Range(minSpawnInterval, maxSpawnInterval);
+        // Randomize initial timers for easy mode
+        leftTimer = Random.Range(easyMinSpawnInterval, easyMaxSpawnInterval);
+        centerTimer = Random.Range(easyMinSpawnInterval, easyMaxSpawnInterval);
+        rightTimer = Random.Range(easyMinSpawnInterval, easyMaxSpawnInterval);
 
         if (cameraTransform != null)
         {
             lastCameraPosition = cameraTransform.position;
         }
+
+        // Get the ProgressTracker script reference
+        progressTracker = FindObjectOfType<ProgressTracker>();
     }
 
     void Update()
     {
-        if (cameraTransform != null && cameraTransform.position.y > lastCameraPosition.y)
+        float cameraSpeed = cameraTransform.position.y - lastCameraPosition.y;
+        if (IsCameraMovingUpwards())
         {
-            if (easy)
+            if (cameraTransform != null && cameraTransform.position.y > lastCameraPosition.y)
             {
-                EasyModeSpawning();
-            }
-            else if (medium)
-            {
-                // Logic for medium mode can be added here
-            }
-            else if (hard)
-            {
-                // Logic for hard mode can be added here
-            }
+                // Check and update difficulty level based on score
+                if (progressTracker != null && progressTracker.score >= (difficultyLevel + 1) * scoreThreshold)
+                {
+                    difficultyLevel++;
+                }
 
-            // Update last camera position
-            lastCameraPosition = cameraTransform.position;
+                if (difficultyLevel >= hardModeThreshold)
+                {
+                    easy = false;
+                    medium = false;
+                    hard = true;
+                }
+                else if (difficultyLevel >= mediumModeThreshold)
+                {
+                    easy = false;
+                    medium = true;
+                }
+
+                if (easy)
+                {
+                    EasyModeSpawning();
+                }
+                else if (medium)
+                {
+                    MediumModeSpawning();
+                }
+                else if (hard)
+                {
+                    HardModeSpawning();
+                }
+
+                // Update last camera position
+                lastCameraPosition = cameraTransform.position;
+            }
         }
+    }
+
+    bool IsCameraMovingUpwards()
+    {
+        return cameraTransform.position.y - lastCameraPosition.y > timerMinSpeedThreshold;
     }
 
     void EasyModeSpawning()
@@ -82,6 +130,11 @@ public class ObstacleSpawner : MonoBehaviour
         {
             SpawnSingleLaneObstacle();
             firstObstacleSpawned = true;
+        }
+
+        if (!IsCameraMovingUpwards())
+        {
+            return; // Pause timers if bubble is moving too slowly or downwards
         }
 
         leftTimer -= Time.deltaTime;
@@ -93,45 +146,121 @@ public class ObstacleSpawner : MonoBehaviour
             SpawnSingleLaneObstacle();
 
             // Reset the timer for the next spawn
-            leftTimer = Random.Range(minSpawnInterval, maxSpawnInterval);
-            centerTimer = Random.Range(minSpawnInterval, maxSpawnInterval);
-            rightTimer = Random.Range(minSpawnInterval, maxSpawnInterval);
+            leftTimer = Random.Range(easyMinSpawnInterval, easyMaxSpawnInterval);
+            centerTimer = Random.Range(easyMinSpawnInterval, easyMaxSpawnInterval);
+            rightTimer = Random.Range(easyMinSpawnInterval, easyMaxSpawnInterval);
+        }
+    }
+
+    void MediumModeSpawning()
+    {
+        if (!IsCameraMovingUpwards())
+        {
+            return; // Pause timers if the camera is moving too slowly or downwards
+        }
+
+        leftTimer -= Time.deltaTime;
+        centerTimer -= Time.deltaTime;
+        rightTimer -= Time.deltaTime;
+
+        // Limit the number of lanes that can spawn obstacles at the same time
+        int lanesSpawned = 0;
+
+        if (leftTimer <= 0f && lanesSpawned < 2)
+        {
+            SpawnLaneObstacle(0);
+            leftTimer = Random.Range(mediumMinSpawnInterval, mediumMaxSpawnInterval);
+            lanesSpawned++;
+        }
+
+        if (centerTimer <= 0f && lanesSpawned < 2)
+        {
+            SpawnLaneObstacle(1);
+            centerTimer = Random.Range(mediumMinSpawnInterval, mediumMaxSpawnInterval);
+            lanesSpawned++;
+        }
+
+        if (rightTimer <= 0f && lanesSpawned < 2)
+        {
+            SpawnLaneObstacle(2);
+            rightTimer = Random.Range(mediumMinSpawnInterval, mediumMaxSpawnInterval);
+            lanesSpawned++;
+        }
+    }
+
+    void HardModeSpawning()
+    {
+        if (!IsCameraMovingUpwards())
+        {
+            return; // Pause timers if bubble is moving too slowly or downwards
+        }
+
+        leftTimer -= Time.deltaTime;
+        centerTimer -= Time.deltaTime;
+        rightTimer -= Time.deltaTime;
+
+        // Each lane spawns obstacles independently
+        if (leftTimer <= 0f)
+        {
+            SpawnLaneObstacle(0);
+            leftTimer = Random.Range(hardMinSpawnInterval, hardMaxSpawnInterval);
+        }
+
+        if (centerTimer <= 0f)
+        {
+            SpawnLaneObstacle(1);
+            centerTimer = Random.Range(hardMinSpawnInterval, hardMaxSpawnInterval);
+        }
+
+        if (rightTimer <= 0f)
+        {
+            SpawnLaneObstacle(2);
+            rightTimer = Random.Range(hardMinSpawnInterval, hardMaxSpawnInterval);
         }
     }
 
     void SpawnSingleLaneObstacle()
     {
-        // Randomly select one of the three lanes
+        int laneIndex = Random.Range(0, 3);
+        SpawnLaneObstacle(laneIndex);
+    }
+
+    void SpawnLaneObstacle(int laneIndex)
+    {
         float[] lanePositions = { -screenWidth / 3f, 0f, screenWidth / 3f };
-        int laneIndex = Random.Range(0, lanePositions.Length);
         float xPosition = lanePositions[laneIndex];
         GameObject selectedObstacle = null;
 
-        if (laneIndex == 1) // Middle lane
+        List<GameObject> laneObstacles = laneIndex switch
         {
-            // Randomize X position within the middle part of the screen
-            xPosition = Random.Range(-screenWidth / 6f, screenWidth / 6f);
+            0 => leftLaneObstacles,
+            1 => centerLaneObstacles,
+            2 => rightLaneObstacles,
+            _ => null
+        };
 
-            // Select a random obstacle from the center lane list
-            if (centerLaneObstacles.Count > 0)
-            {
-                selectedObstacle = centerLaneObstacles[Random.Range(0, centerLaneObstacles.Count)];
-            }
-        }
-        else if (laneIndex == 0 && leftLaneObstacles.Count > 0) // Left lane
+        if (laneObstacles != null && laneObstacles.Count > 0)
         {
-            selectedObstacle = leftLaneObstacles[Random.Range(0, leftLaneObstacles.Count)];
-            if (selectedObstacle != null)
+            List<GameObject> validObstacles = laneObstacles.FindAll(obstacle =>
             {
-                xPosition = selectedObstacle.transform.position.x; // Use the prefab's original X position
-            }
-        }
-        else if (laneIndex == 2 && rightLaneObstacles.Count > 0) // Right lane
-        {
-            selectedObstacle = rightLaneObstacles[Random.Range(0, rightLaneObstacles.Count)];
-            if (selectedObstacle != null)
+                Obstacles obstacleScript = obstacle.GetComponent<Obstacles>();
+                return obstacleScript != null &&
+                       difficultyLevel >= obstacleScript.minSpawnLevel &&
+                       difficultyLevel <= obstacleScript.maxSpawnLevel;
+            });
+
+            if (validObstacles.Count > 0)
             {
-                xPosition = selectedObstacle.transform.position.x; // Use the prefab's original X position
+                selectedObstacle = validObstacles[Random.Range(0, validObstacles.Count)];
+
+                if (laneIndex == 1) // Middle lane
+                {
+                    xPosition = Random.Range(-screenWidth / 6f, screenWidth / 6f);
+                }
+                else
+                {
+                    xPosition = selectedObstacle.transform.position.x; // Use the prefab's original X position
+                }
             }
         }
 
@@ -145,6 +274,32 @@ public class ObstacleSpawner : MonoBehaviour
         {
             GameObject obstacle = Instantiate(selectedObstacle, spawnPosition, selectedObstacle.transform.rotation);
             obstacle.AddComponent<DestroyOffScreen>().Initialize(Camera.main, screenHeight);
+
+            // Check for nearby obstacles and delete one if necessary
+            CheckForNearbyObstacles(obstacle);
+        }
+    }
+
+    void CheckForNearbyObstacles(GameObject currentObstacle)
+    {
+        float checkRadius = 1f; // Adjust the radius as needed
+        Collider2D[] nearbyObstacles = Physics2D.OverlapCircleAll(currentObstacle.transform.position, checkRadius);
+
+        int nearbyCount = 0;
+
+        foreach (Collider2D obstacle in nearbyObstacles)
+        {
+            if (obstacle.gameObject != currentObstacle && obstacle.transform.position.y > cameraTransform.position.y + screenHeight / 2f)
+            {
+                nearbyCount++;
+
+                // If more than two obstacles are nearby, randomly remove one
+                if (nearbyCount > 2)
+                {
+                    Destroy(obstacle.gameObject);
+                    break; // Ensure only one obstacle is removed
+                }
+            }
         }
     }
 }

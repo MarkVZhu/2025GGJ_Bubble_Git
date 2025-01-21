@@ -155,6 +155,7 @@ MonoBehaviour:
   mainCamera: {fileID: 1682548408}
   unitsPerPoint: 5
   scoreText: {fileID: 1256247811}
+  score: 0
 --- !u!4 &162279538
 Transform:
   m_ObjectHideFlags: 0
@@ -611,21 +612,36 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5dcd3f512a2fc94187d46b361f78711, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cameraTransform: {fileID: 1682548409}
   leftLaneObstacles:
   - {fileID: 3617610859665882946, guid: 865610a7bc728094f84bdafd97210682, type: 3}
+  - {fileID: 7603809269625048925, guid: a382557a4e5ef3240a7795ef0d1c6def, type: 3}
+  - {fileID: 8282923305229797730, guid: 2e4568b48b2d1f44e85e280c904931f3, type: 3}
   centerLaneObstacles:
-  - {fileID: 3617610859665882946, guid: d99f61307fa46e64ab9d8f39828a4557, type: 3}
+  - {fileID: 2037383801143444567, guid: d99f61307fa46e64ab9d8f39828a4557, type: 3}
+  - {fileID: 923840853634738577, guid: 85ffa77fa92af9b4ba7a121bad17608e, type: 3}
+  - {fileID: 5506806048246736167, guid: f8d9073d2d01ad246af6506bd79c5232, type: 3}
   rightLaneObstacles:
   - {fileID: 3617610859665882946, guid: 5aa06a431349cbf4d965b0e1cdd608dc, type: 3}
+  - {fileID: 1121775785740986943, guid: 3eee6e3720fad724f97b6b3372e82713, type: 3}
+  - {fileID: 44920907486039402, guid: ffcde6525806370489833c400c4b459b, type: 3}
+  difficultyLevel: 0
+  mediumModeThreshold: 5
+  hardModeThreshold: 15
+  scoreThreshold: 10
   easy: 1
   medium: 0
   hard: 0
-  minSpawnInterval: 3
-  maxSpawnInterval: 6
-  cameraTransform: {fileID: 1682548409}
+  easyMinSpawnInterval: 0.5
+  easyMaxSpawnInterval: 2
+  mediumMinSpawnInterval: 0.4
+  mediumMaxSpawnInterval: 1.5
+  hardMinSpawnInterval: 0.3
+  hardMaxSpawnInterval: 1
   leftTimer: 0
   centerTimer: 0
   rightTimer: 0
+  timerMinSpeedThreshold: 0.025
 --- !u!4 &2009287231
 Transform:
   m_ObjectHideFlags: 0
@@ -654,7 +670,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   inflateRate: 0.6
-  shrinkRate: 0.1
+  shrinkRate: 0.05
   minSize: 0.3
   maxSize: 1.5
   warningThreshold: 0.75
