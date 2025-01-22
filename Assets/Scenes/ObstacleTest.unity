@@ -133,6 +133,7 @@ GameObject:
   m_Component:
   - component: {fileID: 162279538}
   - component: {fileID: 162279537}
+  - component: {fileID: 162279539}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -171,6 +172,19 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &162279539
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 162279536}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b193bed95245506418cef3a99db6199f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentState: 0
 --- !u!1 &1256247809
 GameObject:
   m_ObjectHideFlags: 0
@@ -657,6 +671,51 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &2138119113
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2138119115}
+  - component: {fileID: 2138119114}
+  m_Layer: 0
+  m_Name: Audio Loudness Detection
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &2138119114
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2138119113}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d6e01ef99b879834793429066d3902f3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sampleWindow: 64
+--- !u!4 &2138119115
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2138119113}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &3936730213896891697
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -669,7 +728,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4c82c35fad3f0d5468991bb73f40c5c7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  inflateRate: 0.6
+  detector: {fileID: 2138119114}
+  loudnessSensibility: 100
+  inflateRate: 0.8
   shrinkRate: 0.05
   minSize: 0.3
   maxSize: 1.5
@@ -851,6 +912,7 @@ SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
   - {fileID: 1682548409}
+  - {fileID: 2138119115}
   - {fileID: 1416116702}
   - {fileID: 8980170218095343411}
   - {fileID: 2009287231}

@@ -582,6 +582,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: RankInputPanel
       objectReference: {fileID: 0}
+    - target: {fileID: 7175808030106775708, guid: 7e52bc5b259d17441873287437f64edc, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -597,19 +601,23 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 67425677087939584, guid: 033bf0925bc0fd8409dc0efc06d503b8, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 0
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 815878983485691970, guid: 033bf0925bc0fd8409dc0efc06d503b8, type: 3}
       propertyPath: m_AnchorMax.x
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 815878983485691970, guid: 033bf0925bc0fd8409dc0efc06d503b8, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6432599127731118120, guid: 033bf0925bc0fd8409dc0efc06d503b8, type: 3}
       propertyPath: m_Name
       value: RankShowPanel
+      objectReference: {fileID: 0}
+    - target: {fileID: 6432599127731118120, guid: 033bf0925bc0fd8409dc0efc06d503b8, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6443577971203581956, guid: 033bf0925bc0fd8409dc0efc06d503b8, type: 3}
       propertyPath: m_Pivot.x
@@ -690,6 +698,18 @@ PrefabInstance:
     - target: {fileID: 6443577971203581956, guid: 033bf0925bc0fd8409dc0efc06d503b8, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6646216896510270315, guid: 033bf0925bc0fd8409dc0efc06d503b8, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6646216896510270315, guid: 033bf0925bc0fd8409dc0efc06d503b8, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6646216896510270315, guid: 033bf0925bc0fd8409dc0efc06d503b8, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: -17
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

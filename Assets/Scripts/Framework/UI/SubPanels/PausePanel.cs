@@ -48,14 +48,12 @@ public class PausePanel : BasePanel {
 			case "btnCont":
 				Debug.Log("btnCont被点击");
 				UIManager.Instance.HidePanel("PausePanel");
+				GameManager.Instance.ResumeGame();
 				break;
-			case "btnResume":
-				Debug.Log("btnResume被点击");
-				break;
-			case "btnMain":
-				Debug.Log("btnMain被点击");
+			case "btnReplay":
+				Debug.Log("btnReplay被点击");
 				UIManager.Instance.HidePanel("PausePanel");
-				UIManager.Instance.ShowPanel<MainPanel>("MainPanel");
+				ScenesMgr.Instance.ReloadCurrentScene();
 				break;
 		}
 	}

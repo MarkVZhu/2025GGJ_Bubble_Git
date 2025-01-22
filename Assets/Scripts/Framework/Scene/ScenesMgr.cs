@@ -30,6 +30,11 @@ namespace MarkFramework
 			fun();
 		}
 		
+		public void ReloadCurrentScene()
+		{
+			LoadScene(SceneManager.GetActiveScene().name,()=>{Debug.Log("Reload Current Scene");});
+		}
+		
 		public void LoadSceneAsyn(string name, UnityAction fun)
 		{
 			MonoManager.Instance.StartCoroutine(RealLoadSceneAsyn(name, fun));

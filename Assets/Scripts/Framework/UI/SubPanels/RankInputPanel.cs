@@ -59,7 +59,8 @@ public class RankInputPanel : BasePanel {
 				PlayerData currentPd = new PlayerData();
 				currentPd.playerName = name;
 				currentPd.rankNum = 0;
-				currentPd.score = Random.Range(1000,2000); //StaticDataCenter.Instance.currentScore;
+				currentPd.score = GameManager.Instance.GetScore();
+				//Random.Range(1000,2000); //StaticDataCenter.Instance.currentScore;
 				
 				RankFunctions rf = new RankFunctions();
 				List<PlayerData> playersData = rf.LoadPlayerData();

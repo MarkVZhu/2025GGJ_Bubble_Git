@@ -57,7 +57,7 @@ public class MainPanel : BasePanel {
 			case "btnStart":
 				Debug.Log("btnStart被点击");
 				UIManager.Instance.HidePanel("MainPanel");
-				UIManager.Instance.ShowPanel<ResultPanel>("ResultPanel");
+				GameManager.Instance.StartGame();
 				break;
 			case "btnQuit":
 				Debug.Log("btnQuit被点击");

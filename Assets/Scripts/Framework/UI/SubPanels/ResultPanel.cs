@@ -50,13 +50,10 @@ public class ResultPanel : BasePanel {
 	{
 		switch(btnName)
 		{
-			case "btnResume":
-				Debug.Log("btnResume被点击");
-				break;
-			case "btnMain":
-				Debug.Log("btnMain被点击");
+			case "btnContinue":
+				Debug.Log("btnContinue被点击");
 				UIManager.Instance.HidePanel("ResultPanel");
-				UIManager.Instance.ShowPanel<MainPanel>("MainPanel");
+				UIManager.Instance.ShowPanel<RankInputPanel>("RankInputPanel");
 				break;
 		}
 	}

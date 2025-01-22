@@ -48,8 +48,8 @@ namespace MarkFramework
 			system = canvas.Find("System");
 
 			//创建EventSystem 让其过场景的时候 不被移除
-			obj = ResMgr.Instance.Load<GameObject>("UI/EventSystem");
-			GameObject.DontDestroyOnLoad(obj);
+			// obj = ResMgr.Instance.Load<GameObject>("UI/EventSystem");
+			// GameObject.DontDestroyOnLoad(obj);
 		}
 
 		/// <summary>

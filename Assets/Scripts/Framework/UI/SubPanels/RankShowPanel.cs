@@ -9,7 +9,7 @@ using TMPro;
 public class RankShowPanel : BasePanel {
 
 	public GameObject playerItemPrefab; // 列表项预制件
-    public Transform contentTransform;  // Scroll View 的 Content 对象
+	public Transform contentTransform;  // Scroll View 的 Content 对象
 	
 	protected override void Awake()
 	{
@@ -76,11 +76,13 @@ public class RankShowPanel : BasePanel {
 	{
 		switch(btnName)
 		{
-			case "btnSubmit":
-				
+			case "btnReplay":
+				UIManager.Instance.HidePanel("RankShowPanel");
+				ScenesMgr.Instance.ReloadCurrentScene();
 				break;
-			case "btnCancel":
-				
+			case "btnQuit":
+				Debug.Log("Quit Game");
+				Application.Quit();
 				break;
 		}
 	}
