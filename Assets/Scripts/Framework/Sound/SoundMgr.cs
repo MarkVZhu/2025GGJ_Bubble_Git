@@ -18,16 +18,19 @@ namespace MarkFramework
 		{
 			MonoManager.Instance.AddUpdateListener(Update);
 		}
-		
+				
 		private void Update()
 		{
+			//Debug.Log("soundList.Count : " + soundList.Count);
 			for(int i = 0; i < soundList.Count; i++)
 			{
+				if(soundList[i] == null) continue;
 				if(!soundList[i].isPlaying)
 				{
 					soundList[i].Stop();
-					GameObject.Destroy(soundList[i]);
+					GameObject soundObj = soundList[i].gameObject;
 					soundList.RemoveAt(i);
+					GameObject.Destroy(soundObj);
 				}
 			}
 		}
@@ -175,9 +178,15 @@ namespace MarkFramework
 			for(int i = soundList.Count - 1; i >= 0; i--)
 			{
 				soundList[i].Stop();
-				GameObject.Destroy(soundList[i]);	
+				GameObject soundObj = soundList[i].gameObject;
 				soundList.RemoveAt(i);
+				GameObject.Destroy(soundObj);
 			} 
+		}
+		
+		public void ClearSoundList()
+		{
+			soundList.Clear();
 		}
 	}
 }

@@ -52,6 +52,8 @@ public class MainPanel : BasePanel {
 
 	protected override void OnClick(string btnName)
 	{
+		base.OnClick(btnName);
+		
 		switch(btnName)
 		{
 			case "btnStart":

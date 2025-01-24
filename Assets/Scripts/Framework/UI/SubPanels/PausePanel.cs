@@ -17,6 +17,7 @@ public class PausePanel : BasePanel {
 	// Use this for initialization
 	void Start () {
 		//开始逻辑
+		Invoke("TestM",2f);
 	}
 
 	private void Drag(BaseEventData data)
@@ -43,6 +44,8 @@ public class PausePanel : BasePanel {
 
 	protected override void OnClick(string btnName)
 	{
+		base.OnClick(btnName);
+		
 		switch(btnName)
 		{
 			case "btnCont":
@@ -57,7 +60,7 @@ public class PausePanel : BasePanel {
 				break;
 		}
 	}
-
+	
 	protected override void OnValueChanged(string toggleName, bool value)
 	{
 		//在这来根据名字判断 到底是那一个单选框或者多选框状态变化了 当前状态就是传入的value

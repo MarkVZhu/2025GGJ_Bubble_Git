@@ -17,13 +17,7 @@ public class RankInputPanel : BasePanel {
 
 	// Use this for initialization
 	void Start () {
-
-		// UIManager.AddCustomEventListener(GetControl<Button>("btnStart"), EventTriggerType.PointerEnter, (data)=>{
-		//     Debug.Log("进入");
-		// });
-		// UIManager.AddCustomEventListener(GetControl<Button>("btnStart"), EventTriggerType.PointerExit, (data) => {
-		//     Debug.Log("离开");
-		// });
+		GetControl<TextMeshProUGUI>("ScoreText").text = "Score : " + GameManager.Instance.GetScore();
 	}
 
 	private void Drag(BaseEventData data)
@@ -50,6 +44,8 @@ public class RankInputPanel : BasePanel {
 
 	protected override void OnClick(string btnName)
 	{
+		base.OnClick(btnName);
+		
 		switch(btnName)
 		{
 			case "btnSubmit":

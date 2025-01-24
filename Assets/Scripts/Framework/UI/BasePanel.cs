@@ -46,10 +46,10 @@ namespace MarkFramework
 		{
 
 		}
-
+		
 		protected virtual void OnClick(string btnName)
 		{
-
+			
 		}
 
 		protected virtual void OnValueChanged(string toggleName, bool value)

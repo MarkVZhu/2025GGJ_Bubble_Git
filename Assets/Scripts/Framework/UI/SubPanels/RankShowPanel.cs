@@ -74,6 +74,8 @@ public class RankShowPanel : BasePanel {
 
 	protected override void OnClick(string btnName)
 	{
+		base.OnClick(btnName);
+		
 		switch(btnName)
 		{
 			case "btnReplay":

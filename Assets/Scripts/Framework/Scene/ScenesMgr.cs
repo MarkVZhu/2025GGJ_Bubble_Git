@@ -32,7 +32,8 @@ namespace MarkFramework
 		
 		public void ReloadCurrentScene()
 		{
-			LoadScene(SceneManager.GetActiveScene().name,()=>{Debug.Log("Reload Current Scene");});
+			//FIXME:处理重新加载场景后SoundList中的null
+			LoadScene(SceneManager.GetActiveScene().name,()=>{SoundMgr.Instance.ClearSoundList();});
 		}
 		
 		public void LoadSceneAsyn(string name, UnityAction fun)

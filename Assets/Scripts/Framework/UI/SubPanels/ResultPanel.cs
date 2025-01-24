@@ -48,6 +48,8 @@ public class ResultPanel : BasePanel {
 
 	protected override void OnClick(string btnName)
 	{
+		base.OnClick(btnName);
+		
 		switch(btnName)
 		{
 			case "btnContinue":
