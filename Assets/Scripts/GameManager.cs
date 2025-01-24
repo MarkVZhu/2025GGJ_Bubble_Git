@@ -27,6 +27,7 @@ public class GameManager : SingletonMono<GameManager>
 	{	
 		// 默认状态设置为游戏开始
 		ChangeState(GameState.Start);
+		SoundMgr.Instance.PlayBKMusic("BGM_BUB");
 		UIManager.Instance.ShowPanel<MainPanel>("MainPanel");
 	}
 
@@ -89,6 +90,7 @@ public class GameManager : SingletonMono<GameManager>
 		{
 			ChangeState(GameState.Paused);
 			UIManager.Instance.ShowPanel<PausePanel>("PausePanel");
+			SoundMgr.Instance.PauseBKMusic();
 		}
 	}
 
@@ -100,6 +102,7 @@ public class GameManager : SingletonMono<GameManager>
 		if (currentState == GameState.Paused)
 		{
 			ChangeState(GameState.Playing);
+			SoundMgr.Instance.PlayBKMusic("PausePanel");
 		}
 	}
 	
@@ -113,6 +116,7 @@ public class GameManager : SingletonMono<GameManager>
 	/// </summary>
 	public void EndGame()
 	{
+		SoundMgr.Instance.PlaySound("Explode");
 		ChangeState(GameState.Ended);
 		
 		ProgressTracker pt = GetComponent<ProgressTracker>();
@@ -125,6 +129,7 @@ public class GameManager : SingletonMono<GameManager>
 			Debug.LogError("Not found ProgressTracker!");
 		}
 		
+		SoundMgr.Instance.StopBKMusic();
 		UIManager.Instance.ShowPanel<ResultPanel>("ResultPanel"); //TODO:调出Rank榜单
 	}
 	

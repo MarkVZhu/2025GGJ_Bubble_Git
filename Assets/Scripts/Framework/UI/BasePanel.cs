@@ -49,7 +49,7 @@ namespace MarkFramework
 		
 		protected virtual void OnClick(string btnName)
 		{
-			
+			SoundMgr.Instance.PlaySound("bubbleClick");
 		}
 
 		protected virtual void OnValueChanged(string toggleName, bool value)
