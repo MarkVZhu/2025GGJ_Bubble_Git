@@ -23,7 +23,7 @@ public class BubbleMovement : MonoBehaviour
 	public float blowForce = 50f; // Force applied when blowing the bubble
 	
 	[Header("Blow Force Curve")]
-	public AnimationCurve loudnessToForceCurve = AnimationCurve.Linear(0f, 0f, 5f, 125f);
+	public AnimationCurve loudnessToForceCurve = AnimationCurve.EaseInOut(0f, 0f, 5f, 125f);
 
 	[Header("Bubble Wobble Settings")]
 	public float wobbleFrequency = 1f; // Frequency of the wobble effect
