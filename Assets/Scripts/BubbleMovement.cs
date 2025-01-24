@@ -67,9 +67,9 @@ public class BubbleMovement : MonoBehaviour
 
 		//TODO: 更改吹大气球逻辑
 		// Adjust bubble size when holding left mouse button and space bar
-		if (Input.GetMouseButton(0))
+		if (IsMouseOverCollider())
 		{
-			if (Input.GetKey(KeyCode.Space))
+			if (Input.GetKey(KeyCode.Space) && Input.GetMouseButton(0))
 			{
 				bubbleTransform.localScale += Vector3.one * inflateRate * Time.deltaTime;
 			}
@@ -134,8 +134,7 @@ public class BubbleMovement : MonoBehaviour
 		);
 
 		//TODO:Embed 吹气逻辑
-		//if (Input.GetKey(KeyCode.Space) && !Input.GetMouseButton(0))
-		// if (Input.GetMouseButton(0))
+		// if (Input.GetMouseButton(0) && !IsMouseOverCollider())
 		// {
 		// 	// Calculate the direction away from the mouse cursor
 		// 	Vector3 directionAwayFromMouse = (transform.position - mousePosition).normalized;
@@ -146,7 +145,7 @@ public class BubbleMovement : MonoBehaviour
 		// 	//Debug.Log("Blow Force: " + blowForce); //Log Blow Force		
 		// }
 		
-		if (Input.GetKey(KeyCode.Space) && !Input.GetMouseButton(0))
+		if (Input.GetKey(KeyCode.Space) && Input.GetMouseButton(0) && !IsMouseOverCollider())
 		{
 			// Calculate the direction away from the mouse cursor
 			Vector3 directionAwayFromMouse = (transform.position - mousePosition).normalized;
@@ -208,5 +207,22 @@ public class BubbleMovement : MonoBehaviour
 		{
 			return 125f;
 		}
+	}
+	
+	private bool IsMouseOverCollider()
+	{
+		Collider2D collider = GetComponent<Collider2D>();
+		if (collider == null) return false;
+
+        // Convert mouse screen position to world position
+        Vector2 mouseWorldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+
+        // Check if the mouse world position overlaps with the Collider2D
+        return collider.OverlapPoint(mouseWorldPos);
+	}
+	
+	public void SetHasPopped(bool p)
+	{
+		hasPopped = p;
 	}
 }
