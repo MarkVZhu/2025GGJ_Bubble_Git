@@ -45,10 +45,9 @@ public class BubbleMovement : MonoBehaviour
     private float wobbleTime;
     private Vector2 previousDirection;
 
-    // 让泡泡回正时需要的几个参数（可在 Inspector 调整）
     [Header("Rotation Correction")]
-    public float rotationReturnFactor = 2f;  // 越大，回正越快
-    public float angularDragWhileReturning = 0.2f; // 额外的角阻力
+    public float rotationReturnFactor = 2f;
+    public float angularDragWhileReturning = 0.2f;
 
     private void Awake()
     {
@@ -57,9 +56,7 @@ public class BubbleMovement : MonoBehaviour
 
         rb.gravityScale = 0f;
 
-        // 线性阻力，只管平移不管旋转
         rb.drag = 1f;
-        // 在这里也可以先设一个小angularDrag
         rb.angularDrag = 0f;
     }
 
@@ -144,7 +141,6 @@ public class BubbleMovement : MonoBehaviour
         Debug.Log(reason);
         hasPopped = true;
         GameManager.Instance.EndGame();
-        // 这里可实例化爆裂特效、播放音效、Destroy(gameObject) 等
     }
 
     #endregion
@@ -185,10 +181,8 @@ public class BubbleMovement : MonoBehaviour
         currentSpeed = baseSpeed + (5f / scale) * sizeFactor;
         currentSpeed = Mathf.Clamp(currentSpeed, minSpeed, maxSpeed);
 
-        // 持续向上加力
         rb.AddForce(Vector2.up * currentSpeed * Time.fixedDeltaTime, ForceMode2D.Force);
 
-        // 如果在吹气，就施加线性力 + 扭矩
         if (cachedBlowForce > 0f)
         {
             Vector3 mouseWorldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
@@ -199,41 +193,36 @@ public class BubbleMovement : MonoBehaviour
 
             rb.AddForce(directionAway * cachedBlowForce * Time.fixedDeltaTime, ForceMode2D.Force);
 
-            // 计算扭矩
-            float torqueFactor = 0.2f; // 旋转敏感度
+            float torqueFactor = 0.2f;
             float crossZ = Vector3.Cross(Vector2.up, directionAway).z;
             float torque = crossZ * cachedBlowForce * torqueFactor;
 
             rb.AddTorque(torque * Time.fixedDeltaTime, ForceMode2D.Force);
 
-            // 可设置一下 angularDrag，让吹气时旋转不至于太夸张
             rb.angularDrag = 0.1f;
         }
         else
         {
-            // 不吹气时，让泡泡角度缓慢回正
 
-            // 1. 给刚体一个更高的 angularDrag，帮助它减速
-            rb.angularDrag = angularDragWhileReturning; // 0.2f 或者别的值
+            rb.angularDrag = angularDragWhileReturning;
 
-            // 2. 计算当前角度与 0° 的差
+
             float currentAngle = rb.rotation;
-            // Unity 里 rb.rotation 是以度数存储
-            // 也可以用 transform.eulerAngles.z
 
-            // 用 DeltaAngle 得到 -180 到 180 区间的角度差
+
+
             float angleDiff = Mathf.DeltaAngle(currentAngle, 0f);
 
-            // 3. 根据角度差施加一个纠正扭矩 (带符号)
+
             float torqueToApply = angleDiff * rotationReturnFactor;
 
-            // rb.AddTorque 里用负号，因为若 angleDiff 为正，要施加负扭矩
+
             rb.AddTorque(-torqueToApply * Time.fixedDeltaTime, ForceMode2D.Force);
 
-            // 这样它会慢慢旋回到 0 角度
+
         }
 
-        // 限制线速度
+
         if (rb.velocity.magnitude > maxVelocity)
         {
             rb.velocity = rb.velocity.normalized * maxVelocity;
