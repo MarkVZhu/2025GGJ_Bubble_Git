@@ -299,7 +299,7 @@ public class BubbleMovement : MonoBehaviour
 		rb.gravityScale = 0f;
 
 
-		// rb.drag = 1f;
+		rb.drag = 1f;
 		// rb.angularDrag = 1f;
 	}
 
@@ -321,7 +321,7 @@ public class BubbleMovement : MonoBehaviour
 			HandleSizeChange();
 			HandleColorAndPopCheck();
 			HandleBlowInput();
-			HandleWobbleEffect();
+			//HandleWobbleEffect();
 		}
 	}
 
@@ -450,7 +450,7 @@ public class BubbleMovement : MonoBehaviour
 		}
 
 
-		rb.velocity *= inertiaDampening;
+		// rb.velocity *= inertiaDampening;
 
 
 		if (rb.velocity.magnitude > maxVelocity)
