@@ -164,7 +164,7 @@ public class BubbleMovement : MonoBehaviour
 
 		if (!Input.GetMouseButton(0))
 		{
-			Debug.Log("currentSpeed Velocity add: " + currentSpeed);
+			//Debug.Log("currentSpeed Velocity add: " + currentSpeed);
 			// Move the bubble upward with inertia and wobble effect
 			velocity += Vector3.up * currentSpeed * Time.deltaTime;
 		}
