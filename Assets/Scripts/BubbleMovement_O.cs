@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using MarkFramework;
 using UnityEngine;
 
 public class BubbleMovement_O : MonoBehaviour
@@ -65,6 +66,13 @@ public class BubbleMovement_O : MonoBehaviour
 	
 	void BubbleMove()
 	{
+		if(IsMouseOverCollider())
+			EventCenter.Instance.EventTrigger(E_EventType.E_On_Bubble);
+		else if(Input.GetMouseButton(0))
+			EventCenter.Instance.EventTrigger(E_EventType.E_Open_Mic);
+		else
+			EventCenter.Instance.EventTrigger(E_EventType.E_InGame_Cursor);
+		
 		// Get the mouse position in world coordinates
 		Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 

@@ -79,6 +79,7 @@ public class GameManager : SingletonMono<GameManager>
 	public void StartGame()
 	{
 		ChangeState(GameState.Playing);
+		EventCenter.Instance.EventTrigger(E_EventType.E_InGame_Cursor);
 	}
 
 	/// <summary>
@@ -90,6 +91,7 @@ public class GameManager : SingletonMono<GameManager>
 		{
 			ChangeState(GameState.Paused);
 			UIManager.Instance.ShowPanel<PausePanel>("PausePanel");
+			EventCenter.Instance.EventTrigger(E_EventType.E_Default_Cursor);
 			SoundMgr.Instance.PauseBKMusic();
 		}
 	}
@@ -102,6 +104,7 @@ public class GameManager : SingletonMono<GameManager>
 		if (currentState == GameState.Paused)
 		{
 			ChangeState(GameState.Playing);
+			EventCenter.Instance.EventTrigger(E_EventType.E_InGame_Cursor);
 			SoundMgr.Instance.PlayBKMusic("PausePanel");
 		}
 	}

@@ -30,7 +30,15 @@ namespace MarkFramework
 		/// <summary>
 		/// UI elements' value change
 		/// </summary>
-		E_Raise_Property
+		E_Raise_Property,
+		
+		E_Open_Mic,
+		
+		E_On_Bubble,
+		
+		E_Default_Cursor,
+		
+		E_InGame_Cursor
 		
 	}
 }
