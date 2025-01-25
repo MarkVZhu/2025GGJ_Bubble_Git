@@ -303,6 +303,15 @@ public class ObstacleSpawner : MonoBehaviour
 			}
 		}
 	}
+	
+	public int CheckDifficulty()
+	{
+		if(easy) return 0;
+		if(medium) return 1;
+		if(hard) return 2;
+		else
+		 return -1;	
+	}
 }
 
 public class DestroyOffScreen : MonoBehaviour

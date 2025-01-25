@@ -32,6 +32,9 @@ public class BubbleMovement : MonoBehaviour
 	[Header("Physics Settings")]
 	public float inertiaDampening = 0.99f; // Factor to dampen the inertia over time
 
+	[Header("Bubble Inflate Settings")]
+	public float inflateRadius = 0.5f;
+	
 	[Header("Debug Info")]
 	[SerializeField] private float currentSpeed; // Current speed visible in the inspector
 	[SerializeField] private float currentSize; // Current size visible in the inspector
@@ -72,7 +75,7 @@ public class BubbleMovement : MonoBehaviour
 		// Adjust bubble size when holding left mouse button and space bar
 		if (IsMouseOverCollider())
 		{
-			if (Input.GetKey(KeyCode.Space) && Input.GetMouseButton(0))
+			if (GetBlowForceByLoudness() > 50 && Input.GetMouseButton(0))
 			{
 				bubbleTransform.localScale += Vector3.one * inflateRate * Time.deltaTime;
 			}
@@ -137,28 +140,28 @@ public class BubbleMovement : MonoBehaviour
 		);
 
 		//TODO:Embed 吹气逻辑
-		// if (Input.GetMouseButton(0) && !IsMouseOverCollider())
-		// {
-		// 	// Calculate the direction away from the mouse cursor
-		// 	Vector3 directionAwayFromMouse = (transform.position - mousePosition).normalized;
-
-		// 	float blowForce = GetBlowForceByLoudness();
-		// 	// Apply a force to simulate blowing the bubble
-		// 	velocity += directionAwayFromMouse * blowForce * Time.deltaTime;
-		// 	//Debug.Log("Blow Force: " + blowForce); //Log Blow Force		
-		// }
-		
-		if (Input.GetKey(KeyCode.Space) && Input.GetMouseButton(0) && !IsMouseOverCollider())
+		if (Input.GetMouseButton(0) && !IsMouseOverCollider())
 		{
 			// Calculate the direction away from the mouse cursor
 			Vector3 directionAwayFromMouse = (transform.position - mousePosition).normalized;
 
-			// float blowForce = 50;
 			float blowForce = GetBlowForceByLoudness();
 			// Apply a force to simulate blowing the bubble
 			velocity += directionAwayFromMouse * blowForce * Time.deltaTime;
 			//Debug.Log("Blow Force: " + blowForce); //Log Blow Force		
 		}
+		
+		// if (Input.GetKey(KeyCode.Space) && Input.GetMouseButton(0) && !IsMouseOverCollider())
+		// {
+		// 	// Calculate the direction away from the mouse cursor
+		// 	Vector3 directionAwayFromMouse = (transform.position - mousePosition).normalized;
+
+		// 	// float blowForce = 50;
+		// 	float blowForce = 50;
+		// 	// Apply a force to simulate blowing the bubble
+		// 	velocity += directionAwayFromMouse * blowForce * Time.deltaTime;
+		// 	//Debug.Log("Blow Force: " + blowForce); //Log Blow Force		
+		// }
 
 		// Apply inertia and wobble to the bubble's movement
 		transform.position += (velocity + wobbleOffset) * Time.deltaTime;
@@ -225,7 +228,6 @@ public class BubbleMovement : MonoBehaviour
 		return blowForce;
 	}
 	
-	
 	private bool IsMouseOverCollider()
 	{
 		Collider2D collider = GetComponent<Collider2D>();
@@ -234,12 +236,36 @@ public class BubbleMovement : MonoBehaviour
 		// Convert mouse screen position to world position
 		Vector2 mouseWorldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 
-		// Check if the mouse world position overlaps with the Collider2D
-		return collider.OverlapPoint(mouseWorldPos);
+		// Check if any Collider2D within the radius overlaps
+		Collider2D[] colliders = Physics2D.OverlapCircleAll(mouseWorldPos, inflateRadius);
+
+		// Return true if the current collider is within the detected colliders
+		foreach (Collider2D col in colliders)
+		{
+			if (col == collider)
+			{
+				return true;
+			}
+		}
+
+		return false;
 	}
 	
 	public void SetHasPopped(bool p)
 	{
 		hasPopped = p;
+	}
+	
+	// Gizmos for visualizing the mouse radius
+	private void OnDrawGizmos()
+	{
+		if (Camera.main == null) return;
+
+		// Convert mouse screen position to world position
+		Vector2 mouseWorldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+
+		// Draw a wire sphere at the mouse position with a radius of 1 unit
+		Gizmos.color = Color.red;
+		Gizmos.DrawWireSphere(mouseWorldPos, inflateRadius);
 	}
 }
