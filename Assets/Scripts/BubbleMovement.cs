@@ -254,24 +254,24 @@ public class BubbleMovement : MonoBehaviour
     public float loudnessSensibility = 100;
 
     [Header("Bubble Size Settings")]
-    public float inflateRate = 0.6f;   // 当鼠标 + 空格按住在泡泡上时，泡泡变大的速率
-    public float shrinkRate = 0.1f;   // 未按住或鼠标不在泡泡上时，泡泡缩小的速率
+    public float inflateRate = 0.6f;
+    public float shrinkRate = 0.1f;
     public float minSize = 0.3f;
     public float maxSize = 1.5f;
     public float warningThreshold = 0.7f;
 
     [Header("Bubble Movement Settings")]
-    public float baseSpeed = 5f;      // 基础上浮力大小
-    public float sizeFactor = 3f;     // 越小的泡泡，上浮越快
-    public float minSpeed = 1f;       // 上浮速度下限
-    public float maxSpeed = 5f;       // 上浮速度上限
+    public float baseSpeed = 5f;
+    public float sizeFactor = 3f;
+    public float minSpeed = 1f;
+    public float maxSpeed = 5f;
 
     [Header("Blow Force Curve")]
     public AnimationCurve loudnessToForceCurve = AnimationCurve.EaseInOut(0f, 0f, 5f, 125f);
 
     [Header("Additional Settings")]
-    public float inertiaDampening = 0.99f;  // 速度衰减系数 (如果不想用 drag)
-    public float maxVelocity = 6f;          // 整体速度上限，防止无限加速
+    public float inertiaDampening = 0.99f;
+    public float maxVelocity = 6f;
 
     [Header("Bubble Wobble Settings")]
     public float wobbleFrequency = 1f;
@@ -292,17 +292,17 @@ public class BubbleMovement : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         spriteRenderer = GetComponent<SpriteRenderer>();
 
-        // 不使用自带重力，让气泡悬浮
+
         rb.gravityScale = 0f;
 
-        // 如果想用物理阻力来防止无限加速，可以改这里
+
         // rb.drag = 1f;
         // rb.angularDrag = 1f;
     }
 
     private void Start()
     {
-        // 可以在这里做一些初始化，如大小、颜色等
+
         // transform.localScale = Vector3.one;
     }
 
@@ -317,8 +317,8 @@ public class BubbleMovement : MonoBehaviour
         {
             HandleSizeChange();
             HandleColorAndPopCheck();
-            HandleBlowInput();     // 先检测吹气，记录下本帧要用的力
-            HandleWobbleEffect();  // 仅做视觉动画
+            HandleBlowInput();
+            HandleWobbleEffect();
         }
     }
 
@@ -336,7 +336,7 @@ public class BubbleMovement : MonoBehaviour
     {
         bool mouseOver = IsMouseOverCollider();
 
-        // 如果鼠标在泡泡上 + (空格+左键)，就充气，否则缩小
+
         if (mouseOver && Input.GetKey(KeyCode.Space) && Input.GetMouseButton(0))
         {
             transform.localScale += Vector3.one * inflateRate * Time.deltaTime;
@@ -358,7 +358,6 @@ public class BubbleMovement : MonoBehaviour
 
         if (scale >= maxSize)
         {
-            // 气泡過大爆裂
             ChangeBubbleColor(Color.red);
             if (!hasPopped)
             {
@@ -367,7 +366,7 @@ public class BubbleMovement : MonoBehaviour
         }
         else if (scale <= minSize)
         {
-            // 氣泡過小爆裂
+
             ChangeBubbleColor(Color.red);
             if (!hasPopped)
             {
@@ -376,7 +375,6 @@ public class BubbleMovement : MonoBehaviour
         }
         else if (scale >= (maxSize - warningOffset) || scale <= (minSize + warningOffset))
         {
-            // 黄区，警告
             ChangeBubbleColor(Color.yellow);
             hasPopped = false;
         }
@@ -403,7 +401,6 @@ public class BubbleMovement : MonoBehaviour
 
     private void HandleBlowInput()
     {
-        // 如果要调试，不想用麦克风，可以注释下面的 if 并直接让 cachedBlowForce = 50f;
         if (Input.GetKey(KeyCode.Space) && Input.GetMouseButton(0) && !IsMouseOverCollider())
         {
             float loudness = 0f;
@@ -421,7 +418,7 @@ public class BubbleMovement : MonoBehaviour
             cachedBlowForce = 0f;
         }
 
-        currentBlowForce = cachedBlowForce; // 仅用于在Inspector查看
+        currentBlowForce = cachedBlowForce;
     }
 
     #endregion
@@ -430,30 +427,29 @@ public class BubbleMovement : MonoBehaviour
 
     private void HandleMovementPhysics()
     {
-        // 1. 计算当前上浮速度
+
         float scale = transform.localScale.x;
         currentSpeed = baseSpeed + (5f / scale) * sizeFactor;
         currentSpeed = Mathf.Clamp(currentSpeed, minSpeed, maxSpeed);
 
-        // 2. 持续向上施加力（浮力感）
         //    用 ForceMode2D.Force + Time.fixedDeltaTime，可以让浮力相对平滑
         rb.AddForce(Vector2.up * currentSpeed * Time.fixedDeltaTime, ForceMode2D.Force);
 
-        // 3. 如果吹气，施加额外力
+
         if (cachedBlowForce > 0f)
         {
             Vector3 mouseWorldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             mouseWorldPos.z = 0f;
             Vector2 directionAway = (transform.position - mouseWorldPos).normalized;
 
-            // 用 ForceMode2D.Force
+
             rb.AddForce(directionAway * cachedBlowForce * Time.fixedDeltaTime, ForceMode2D.Force);
         }
 
-        // 4. 人为阻尼
+
         rb.velocity *= inertiaDampening;
 
-        // 5. 限制最大速度，防止无限加速
+
         if (rb.velocity.magnitude > maxVelocity)
         {
             rb.velocity = rb.velocity.normalized * maxVelocity;
@@ -466,12 +462,10 @@ public class BubbleMovement : MonoBehaviour
 
     private void HandleWobbleEffect()
     {
-        // 只做外形的抖动，不影响刚体位置
         wobbleTime += Time.deltaTime;
         float wobbleSin = Mathf.Sin(wobbleTime * wobbleFrequency) * wobbleAmplitude;
         float wobbleCos = Mathf.Cos(wobbleTime * wobbleFrequency) * wobbleAmplitude;
 
-        // 这里示例：在 Z 轴上轻微旋转
         transform.localEulerAngles = new Vector3(0, 0, wobbleSin * 10f);
     }
 
