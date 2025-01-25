@@ -21,6 +21,9 @@ public class BubbleMovement : MonoBehaviour
 	public float minSpeed = 1f; // Minimum speed of the bubble
 	public float maxSpeed = 5f; // Maximum speed of the bubble
 	public float blowForce = 50f; // Force applied when blowing the bubble
+	
+	[Header("Blow Force Curve")]
+	public AnimationCurve loudnessToForceCurve = AnimationCurve.EaseInOut(0f, 0f, 5f, 125f);
 
 	[Header("Bubble Wobble Settings")]
 	public float wobbleFrequency = 1f; // Frequency of the wobble effect
@@ -150,7 +153,8 @@ public class BubbleMovement : MonoBehaviour
 			// Calculate the direction away from the mouse cursor
 			Vector3 directionAwayFromMouse = (transform.position - mousePosition).normalized;
 
-			float blowForce = 50;
+			// float blowForce = 50;
+			float blowForce = GetBlowForceByLoudness();
 			// Apply a force to simulate blowing the bubble
 			velocity += directionAwayFromMouse * blowForce * Time.deltaTime;
 			//Debug.Log("Blow Force: " + blowForce); //Log Blow Force		
@@ -179,36 +183,48 @@ public class BubbleMovement : MonoBehaviour
 		}
 	}
 	
+	// float GetBlowForceByLoudness()
+	// {
+	// 	float loudness = detector.GetLoudnessFromMicrophone() * loudnessSensibility;
+	// 	Debug.Log("Loudness: " + loudness); //TODO:Log Loudness
+	// 	
+	// 	if(loudness < 0.1)
+	// 	{
+	// 		return 0;
+	// 	}
+	// 	else if(loudness < 1)
+	// 	{
+	// 		return 25f;
+	// 	}
+	// 	else if(loudness < 2)
+	// 	{
+	// 		return 50f;
+	// 	}
+	// 	else if(loudness < 3)
+	// 	{
+	// 		return 75f;
+	// 	}
+	// 	else if(loudness < 5)
+	// 	{
+	// 		return 100f;
+	// 	}
+	// 	else
+	// 	{
+	// 		return 125f;
+	// 	}
+	// }
+	
+	
 	float GetBlowForceByLoudness()
 	{
 		float loudness = detector.GetLoudnessFromMicrophone() * loudnessSensibility;
-		//Debug.Log("Loudness: " + loudness); //TODO:Log Loudness
 		
-		if(loudness < 0.1)
-		{
-			return 0;
-		}
-		else if(loudness < 1)
-		{
-			return 25f;
-		}
-		else if(loudness < 2)
-		{
-			return 50f;
-		}
-		else if(loudness < 3)
-		{
-			return 75f;
-		}
-		else if(loudness < 5)
-		{
-			return 100f;
-		}
-		else
-		{
-			return 125f;
-		}
+		loudness = Mathf.Clamp(loudness, 0f, 10f); 
+		
+		float blowForce = loudnessToForceCurve.Evaluate(loudness);
+		return blowForce;
 	}
+	
 	
 	private bool IsMouseOverCollider()
 	{
