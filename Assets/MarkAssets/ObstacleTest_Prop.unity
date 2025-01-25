@@ -197,11 +197,11 @@ GameObject:
   - component: {fileID: 394025108}
   m_Layer: 0
   m_Name: CursorManager
-  m_TagString: Untagged
+  m_TagString: Cursor
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &394025108
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -214,7 +214,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 18328b6901f93eb4191542d9675a959e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  defaultCursor: {fileID: 10912, guid: 0000000000000000f000000000000000, type: 0}
+  defaultCursor: {fileID: 0}
+  inGameCursor: {fileID: 10912, guid: 0000000000000000f000000000000000, type: 0}
   openMicCursor: {fileID: 10900, guid: 0000000000000000f000000000000000, type: 0}
   inflateCursor: {fileID: 10910, guid: 0000000000000000f000000000000000, type: 0}
   hotspot: {x: 0, y: 0}
