@@ -28,7 +28,7 @@ public class Obstacles : MonoBehaviour
 
 			// Debug log the collision with the obstacle's name
 			Debug.Log($"Bubble collided with {gameObject.name}.");
-			GameManager.Instance.EndGame();
+			//GameManager.Instance.EndGame();
 		}
 	}
 

@@ -164,6 +164,7 @@ public class BubbleMovement : MonoBehaviour
 
 		if (!Input.GetMouseButton(0))
 		{
+			Debug.Log("currentSpeed Velocity add: " + currentSpeed);
 			// Move the bubble upward with inertia and wobble effect
 			velocity += Vector3.up * currentSpeed * Time.deltaTime;
 		}
@@ -214,11 +215,11 @@ public class BubbleMovement : MonoBehaviour
 		Collider2D collider = GetComponent<Collider2D>();
 		if (collider == null) return false;
 
-        // Convert mouse screen position to world position
-        Vector2 mouseWorldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+		// Convert mouse screen position to world position
+		Vector2 mouseWorldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 
-        // Check if the mouse world position overlaps with the Collider2D
-        return collider.OverlapPoint(mouseWorldPos);
+		// Check if the mouse world position overlaps with the Collider2D
+		return collider.OverlapPoint(mouseWorldPos);
 	}
 	
 	public void SetHasPopped(bool p)
