@@ -227,7 +227,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mainCamera: {fileID: 1682548408}
   unitsPerPoint: 5
-  scoreText: {fileID: 0}
+  scoreText: {fileID: 1351637794}
   score: 0
 --- !u!4 &162279538
 Transform:
@@ -257,7 +257,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentState: 0
-  inGameCanvas: {fileID: 0}
+  inGameCanvas: {fileID: 1701830808}
 --- !u!1 &209439786
 GameObject:
   m_ObjectHideFlags: 0
@@ -813,6 +813,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3166a6bcfc97a4a46a5f4e690791db3d, type: 3}
+--- !u!114 &1351637794 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3798687111347048772, guid: 2cc0f338523d10043947b50dc44a4f48, type: 3}
+  m_PrefabInstance: {fileID: 1024378604}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1416116699
 GameObject:
   m_ObjectHideFlags: 0
@@ -1145,6 +1156,11 @@ MonoBehaviour:
   m_CameraActivatedEvent:
     m_PersistentCalls:
       m_Calls: []
+--- !u!1 &1701830808 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2683222984068353938, guid: 2cc0f338523d10043947b50dc44a4f48, type: 3}
+  m_PrefabInstance: {fileID: 1024378604}
+  m_PrefabAsset: {fileID: 0}
 --- !u!224 &1855058409 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 7241280065299760033, guid: 2cc0f338523d10043947b50dc44a4f48, type: 3}

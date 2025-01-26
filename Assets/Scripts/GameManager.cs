@@ -124,6 +124,7 @@ public class GameManager : SingletonMono<GameManager>
 		SoundMgr.Instance.PlaySound("Explode");
 		ChangeState(GameState.Ended);
 		if(inGameCanvas) inGameCanvas.SetActive(false);
+		EventCenter.Instance.EventTrigger(E_EventType.E_Default_Cursor);
 		
 		ProgressTracker pt = GetComponent<ProgressTracker>();
 		if(pt != null)
