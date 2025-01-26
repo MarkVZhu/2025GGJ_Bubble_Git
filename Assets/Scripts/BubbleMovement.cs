@@ -178,7 +178,7 @@ public class BubbleMovement : MonoBehaviour
         if (scale >= maxBoundary)
         {
             float distToMax = scale - maxBoundary; // [0 ~ warningOffset]
-            float fraction = Mathf.Clamp01(distToMax / warningOffset) * 3; // 0~1
+            float fraction = Mathf.Clamp01(distToMax / warningOffset) * 5; // 0~1
 
             animator.SetBool("ChangingMaxColor", true);
             animator.SetFloat("MaxColorAnimSpeed", fraction);
@@ -192,7 +192,7 @@ public class BubbleMovement : MonoBehaviour
         if (scale <= minBoundary)
         {
             float distToMin = minBoundary - scale; // [0 ~ warningOffset]
-            float fraction = Mathf.Clamp01(distToMin / warningOffset) * 3; // 0~1
+            float fraction = Mathf.Clamp01(distToMin / warningOffset) * 5; // 0~1
 
             animator.SetBool("ChangingMinColor", true);
             animator.SetFloat("MinColorAnimSpeed", fraction);
