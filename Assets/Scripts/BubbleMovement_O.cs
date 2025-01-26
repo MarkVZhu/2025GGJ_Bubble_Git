@@ -54,7 +54,7 @@ public class BubbleMovement_O : MonoBehaviour
 
 	void Update()
 	{
-		if(Input.GetKeyDown(KeyCode.Escape))
+		if(Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(KeyCode.P))
 		{
 			GameManager.Instance.PauseGame();
 		}
