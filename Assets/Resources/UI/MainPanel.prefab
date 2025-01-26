@@ -111,7 +111,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 1.1319, y: 313}
+  m_AnchoredPosition: {x: 1.1319, y: 424}
   m_SizeDelta: {x: 1082.2639, y: 200}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &5998782809021559223
@@ -142,7 +142,9 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: <Wave>Game Name</Wave>
+  m_text: '<Wave>Blub Blub
+
+    Bubble</Wave>'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 243d478311104344d8f0f7dc490d4c94, type: 2}
   m_sharedMaterial: {fileID: 4551163408769855910, guid: 243d478311104344d8f0f7dc490d4c94, type: 2}
@@ -151,8 +153,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4278190080
-  m_fontColor: {r: 0, g: 0, b: 0, a: 1}
+    rgba: 4294967295
+  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -181,7 +183,7 @@ MonoBehaviour:
   m_textAlignment: 65535
   m_characterSpacing: -5.2
   m_wordSpacing: 0
-  m_lineSpacing: 0
+  m_lineSpacing: -3.57
   m_lineSpacingMax: 0
   m_paragraphSpacing: 0
   m_charWidthMaxAdj: 0
