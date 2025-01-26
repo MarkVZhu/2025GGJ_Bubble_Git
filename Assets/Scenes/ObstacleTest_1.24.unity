@@ -194,12 +194,16 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 2176407404320637087, guid: 8671e34fcb1809544a1976b28402325d, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2176407404320637087, guid: 8671e34fcb1809544a1976b28402325d, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2176407404320637087, guid: 8671e34fcb1809544a1976b28402325d, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.97
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2176407404320637087, guid: 8671e34fcb1809544a1976b28402325d, type: 3}
       propertyPath: m_LocalPosition.z
@@ -236,10 +240,6 @@ PrefabInstance:
     - target: {fileID: 3689819026546036306, guid: 8671e34fcb1809544a1976b28402325d, type: 3}
       propertyPath: m_Name
       value: BackGroudImage
-      objectReference: {fileID: 0}
-    - target: {fileID: 3689819026546036306, guid: 8671e34fcb1809544a1976b28402325d, type: 3}
-      propertyPath: m_IsActive
-      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -750,8 +750,8 @@ MonoBehaviour:
   - {fileID: 3689819026546036306, guid: 234746a7ddc31a645a113e0e7ed65831, type: 3}
   - {fileID: 3689819026546036306, guid: 5c0c5987188aa264789382063efb39c6, type: 3}
   cameraTransform: {fileID: 1682548409}
-  backgroundHeight: 10
-  initialOffset: 1
+  backgroundHeight: 49.57
+  initialOffset: 0
   obstacleSpawner: {fileID: 0}
 --- !u!1 &2138119113
 GameObject:
@@ -805,7 +805,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6559132313775074793}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4c82c35fad3f0d5468991bb73f40c5c7, type: 3}
   m_Name: 
@@ -817,11 +817,10 @@ MonoBehaviour:
   minSize: 0.3
   maxSize: 1.5
   warningThreshold: 0.75
-  speed: 2
+  baseSpeed: 5
   sizeFactor: 3
   minSpeed: 2
   maxSpeed: 8
-  blowForce: 50
   loudnessToForceCurve:
     serializedVersion: 2
     m_Curve:
@@ -846,12 +845,16 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+  inertiaDampening: 0.99
+  maxVelocity: 6
   wobbleFrequency: 1
   wobbleAmplitude: 0.3
-  inertiaDampening: 0.99
   inflateRadius: 0.5
   currentSpeed: 0
   currentSize: 0
+  currentBlowForce: 0
+  rotationReturnFactor: 2
+  angularDragWhileReturning: 0.2
 --- !u!58 &4031424362341966759
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -929,6 +932,7 @@ GameObject:
   - component: {fileID: 9219748390762556927}
   - component: {fileID: 3936730213896891697}
   - component: {fileID: 9219748390762556928}
+  - component: {fileID: 9219748390762556929}
   m_Layer: 0
   m_Name: Bubble
   m_TagString: Player
@@ -1036,6 +1040,60 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &9219748390762556929
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6559132313775074793}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d28fb6c6efc2fee419ef37018111264c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  detector: {fileID: 2138119114}
+  loudnessSensibility: 100
+  inflateRate: 0.6
+  shrinkRate: 0.1
+  minSize: 0.3
+  maxSize: 1.5
+  warningThreshold: 0.7
+  speed: 2
+  sizeFactor: 3
+  minSpeed: 2
+  maxSpeed: 10
+  blowForce: 50
+  loudnessToForceCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 5
+      value: 125
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  wobbleFrequency: 1
+  wobbleAmplitude: 0.3
+  inertiaDampening: 0.99
+  inflateRadius: 0.5
+  currentSpeed: 0
+  currentSize: 0
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

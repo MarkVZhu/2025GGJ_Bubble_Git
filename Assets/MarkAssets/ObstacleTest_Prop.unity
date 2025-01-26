@@ -185,6 +185,56 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentState: 0
+--- !u!1 &394025107
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 394025109}
+  - component: {fileID: 394025108}
+  m_Layer: 0
+  m_Name: CursorManager
+  m_TagString: Cursor
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &394025108
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 394025107}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 18328b6901f93eb4191542d9675a959e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  defaultCursor: {fileID: 0}
+  inGameCursor: {fileID: 10912, guid: 0000000000000000f000000000000000, type: 0}
+  openMicCursor: {fileID: 10900, guid: 0000000000000000f000000000000000, type: 0}
+  inflateCursor: {fileID: 10910, guid: 0000000000000000f000000000000000, type: 0}
+  hotspot: {x: 0, y: 0}
+  cursorMode: 0
+--- !u!4 &394025109
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 394025107}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -1.2678925, y: 0.041547634, z: -0.047123104}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &841917339
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -805,7 +855,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6559132313775074793}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4c82c35fad3f0d5468991bb73f40c5c7, type: 3}
   m_Name: 
@@ -817,11 +867,10 @@ MonoBehaviour:
   minSize: 0.3
   maxSize: 1.5
   warningThreshold: 0.75
-  speed: 2
+  baseSpeed: 5
   sizeFactor: 3
   minSpeed: 2
   maxSpeed: 8
-  blowForce: 50
   loudnessToForceCurve:
     serializedVersion: 2
     m_Curve:
@@ -846,12 +895,14 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+  inertiaDampening: 0.99
+  maxVelocity: 6
   wobbleFrequency: 1
   wobbleAmplitude: 0.3
-  inertiaDampening: 0.99
   inflateRadius: 0.5
   currentSpeed: 0
   currentSize: 0
+  currentBlowForce: 0
 --- !u!58 &4031424362341966759
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -929,6 +980,7 @@ GameObject:
   - component: {fileID: 9219748390762556927}
   - component: {fileID: 3936730213896891697}
   - component: {fileID: 9219748390762556928}
+  - component: {fileID: 9219748390762556929}
   m_Layer: 0
   m_Name: Bubble
   m_TagString: Player
@@ -1036,6 +1088,60 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &9219748390762556929
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6559132313775074793}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d28fb6c6efc2fee419ef37018111264c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  detector: {fileID: 2138119114}
+  loudnessSensibility: 100
+  inflateRate: 0.8
+  shrinkRate: 0.1
+  minSize: 0.3
+  maxSize: 1.5
+  warningThreshold: 0.7
+  speed: 2
+  sizeFactor: 3
+  minSpeed: 2
+  maxSpeed: 12
+  blowForce: 50
+  loudnessToForceCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 5
+      value: 125
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  wobbleFrequency: 1
+  wobbleAmplitude: 0.3
+  inertiaDampening: 0.99
+  inflateRadius: 0.5
+  currentSpeed: 0
+  currentSize: 0
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
@@ -1048,3 +1154,4 @@ SceneRoots:
   - {fileID: 162279538}
   - {fileID: 1465141777}
   - {fileID: 841917339}
+  - {fileID: 394025109}

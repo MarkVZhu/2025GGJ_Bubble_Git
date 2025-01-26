@@ -7,7 +7,7 @@ public class BackgroundGenerator : MonoBehaviour
 	public Transform cameraTransform;  // The camera's transform
 	public float backgroundHeight = 10; // Height of the background prefab
 	public float initialOffset = 1f; // Initial generated at background.y - initialOffset 
-	public ObstacleSpawner obstacleSpawner;
+	private ObstacleSpawner obstacleSpawner;
 
 	private Queue<GameObject> activeBackgrounds = new Queue<GameObject>();
 	private float spawnThreshold; // The Y-position threshold for spawning a new background
