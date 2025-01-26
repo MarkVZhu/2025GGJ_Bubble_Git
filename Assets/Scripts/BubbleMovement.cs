@@ -166,7 +166,7 @@ public class BubbleMovement : MonoBehaviour
         {
             // 距离程度 fraction: 0~1
             float distToMax = scale - maxBoundary; // [0 ~ warningOffset]
-            float fraction = Mathf.Clamp01(distToMax / warningOffset); // 0~1
+            float fraction = Mathf.Clamp01(distToMax / warningOffset) * 3; // 0~1
 
             // // 计算闪烁频率
             // float baseFreq = 1f; // 基础闪烁频率(可调)
@@ -189,7 +189,8 @@ public class BubbleMovement : MonoBehaviour
             //     1f
             // );
             // ChangeBubbleColor(finalColor);
-            animator.SetBool("ChangingColor", true);
+            animator.SetBool("ChangingMaxColor", true);
+            animator.SetFloat("MaxColorAnimSpeed", fraction);
 
             hasPopped = false;
             return;
