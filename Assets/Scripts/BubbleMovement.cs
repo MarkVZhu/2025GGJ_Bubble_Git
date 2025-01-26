@@ -20,7 +20,8 @@ public class BubbleMovement : MonoBehaviour
 	public float maxSpeed = 5f;
 
 	[Header("Blow Force Curve")]
-	public AnimationCurve loudnessToForceCurve = AnimationCurve.EaseInOut(0f, 0f, 5f, 125f);
+	public float maxCurveValue = 150f;
+	public AnimationCurve loudnessToForceCurve = AnimationCurve.EaseInOut(0f, 0f, 5f, 150f);
 
 	[Header("Additional Settings")] public float inertiaDampening = 0.99f;
 	public float maxVelocity = 6f;
@@ -103,7 +104,9 @@ public class BubbleMovement : MonoBehaviour
 		{
 			if (mouseOver && Input.GetMouseButton(0))
 			{
-				transform.localScale += Vector3.one * inflateRate * Time.deltaTime;
+				float loudness = detector.GetLoudnessFromMicrophone() * loudnessSensibility;
+				loudness = loudnessToForceCurve.Evaluate(loudness);
+				transform.localScale += Vector3.one * (loudness/maxCurveValue) * Time.deltaTime;
 			}
 			else
 			{
