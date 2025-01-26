@@ -223,8 +223,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e8ace8ced0e81c847968cdca0aeda757, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  typewriterStartsAutomatically: 1
-  animationLoop: 0
+  typewriterStartsAutomatically: 0
+  animationLoop: 1
   timeScale: 0
   _text: <Wave>Game Name</Wave>
   useDynamicScaling: 1
