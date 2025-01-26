@@ -269,6 +269,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   currentState: 0
   inGamePanel: {fileID: 1257771884}
+  anim: {fileID: 9219748390762556928}
 --- !u!1 &209439786
 GameObject:
   m_ObjectHideFlags: 0

@@ -18,6 +18,7 @@ public class GameManager : SingletonMono<GameManager>
 	[SerializeField] private GameState currentState;
 	public GameState CurrentState => currentState;
 	public GameObject inGamePanel;
+	public Animator anim;
 
 	// 是否游戏正在运行
 	public bool IsGameRunning => currentState == GameState.Playing;
@@ -69,7 +70,7 @@ public class GameManager : SingletonMono<GameManager>
 			case GameState.Ended:
 				Debug.Log("Game Ended");
 				// 结束游戏逻辑
-				Time.timeScale = 0f;
+				Time.timeScale = 1f;
 				break;
 		}
 	}
@@ -137,11 +138,17 @@ public class GameManager : SingletonMono<GameManager>
 		}
 		
 		SoundMgr.Instance.StopBKMusic();
-		UIManager.Instance.ShowPanel<ResultPanel>("ResultPanel"); //TODO:调出Rank榜单
+		anim.Play("BubblePop");
+		Invoke("EndGamePanel", 1f);
 	}
 	
 	public int GetScore()
 	{
 		return gameScore;
+	}
+	
+	public void EndGamePanel()
+	{
+		UIManager.Instance.ShowPanel<ResultPanel>("ResultPanel"); //TODO:调出Rank榜单
 	}
 }
