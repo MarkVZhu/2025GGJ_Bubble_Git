@@ -1407,7 +1407,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   detector: {fileID: 2138119114}
   loudnessSensibility: 100
-  useVoiceDetect: 1
+  useVoiceDetect: 0
   inflateRate: 0.8
   shrinkRate: 0.1
   minSize: 0.3

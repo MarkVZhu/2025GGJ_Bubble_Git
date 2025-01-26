@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 4680902221839557601}
   - component: {fileID: 3321654833267153335}
   - component: {fileID: 4358648632869478867}
+  - component: {fileID: -1544983944980204635}
   m_Layer: 0
   m_Name: Brick M
   m_TagString: Obstacle
@@ -145,3 +146,23 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   minSpawnLevel: 5
   maxSpawnLevel: 99
+--- !u!114 &-1544983944980204635
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5506806048246736167}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 075cd76e1d6ed412d943d2638e65e6be, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  checkWidth: 17.1
+  checkHeight: 1
+  obstacleMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  amplitude: 2
+  duration: 2
+  movementEase: 4
