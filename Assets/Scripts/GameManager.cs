@@ -17,7 +17,7 @@ public class GameManager : SingletonMono<GameManager>
 	// 当前游戏状态
 	[SerializeField] private GameState currentState;
 	public GameState CurrentState => currentState;
-	public GameObject inGameCanvas;
+	public GameObject inGamePanel;
 
 	// 是否游戏正在运行
 	public bool IsGameRunning => currentState == GameState.Playing;
@@ -80,7 +80,7 @@ public class GameManager : SingletonMono<GameManager>
 	public void StartGame()
 	{
 		ChangeState(GameState.Playing);
-		if(inGameCanvas) inGameCanvas.SetActive(true);
+		if(inGamePanel) inGamePanel.SetActive(true);
 		//EventCenter.Instance.EventTrigger(E_EventType.E_InGame_Cursor);
 	}
 
@@ -123,7 +123,7 @@ public class GameManager : SingletonMono<GameManager>
 	{
 		SoundMgr.Instance.PlaySound("Explode");
 		ChangeState(GameState.Ended);
-		if(inGameCanvas) inGameCanvas.SetActive(false);
+		if(inGamePanel) inGamePanel.SetActive(false);
 		EventCenter.Instance.EventTrigger(E_EventType.E_Default_Cursor);
 		
 		ProgressTracker pt = GetComponent<ProgressTracker>();
