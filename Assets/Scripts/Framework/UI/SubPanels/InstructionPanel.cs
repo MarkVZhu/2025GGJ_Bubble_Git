@@ -5,10 +5,7 @@ using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using MarkFramework;
 
-public class MainPanel : BasePanel {
-
-	//public Button btnStart;
-	//public Button btnQuit;
+public class InstructionPanel : BasePanel {
 
 	protected override void Awake()
 	{
@@ -19,13 +16,8 @@ public class MainPanel : BasePanel {
 
 	// Use this for initialization
 	void Start () {
-
-		// UIManager.AddCustomEventListener(GetControl<Button>("btnStart"), EventTriggerType.PointerEnter, (data)=>{
-		//     Debug.Log("进入");
-		// });
-		// UIManager.AddCustomEventListener(GetControl<Button>("btnStart"), EventTriggerType.PointerExit, (data) => {
-		//     Debug.Log("离开");
-		// });
+		//开始逻辑
+		Invoke("TestM",2f);
 	}
 
 	private void Drag(BaseEventData data)
@@ -56,22 +48,14 @@ public class MainPanel : BasePanel {
 		
 		switch(btnName)
 		{
-			case "btnStart":
-				Debug.Log("btnStart被点击");
-				UIManager.Instance.HidePanel("MainPanel");
-				GameManager.Instance.StartGame();
-				break;
-			case "btnIns":
-				Debug.Log("btnIns被点击");
-				UIManager.Instance.HidePanel("MainPanel");
-				UIManager.Instance.ShowPanel<InstructionPanel>("InstructionPanel");
-				break;
-			case "btnQuit":
-				Debug.Log("btnQuit被点击");
+			case "btnBack":
+				Debug.Log("btnBack被点击");
+				UIManager.Instance.HidePanel("InstructionPanel");
+				UIManager.Instance.ShowPanel<MainPanel>("MainPanel");
 				break;
 		}
 	}
-
+	
 	protected override void OnValueChanged(string toggleName, bool value)
 	{
 		//在这来根据名字判断 到底是那一个单选框或者多选框状态变化了 当前状态就是传入的value

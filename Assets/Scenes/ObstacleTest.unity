@@ -1409,7 +1409,7 @@ MonoBehaviour:
   loudnessSensibility: 100
   useVoiceDetect: 1
   inflateRate: 0.8
-  shrinkRate: 0.05
+  shrinkRate: 0.1
   minSize: 0.3
   maxSize: 1.5
   warningThreshold: 0.75
@@ -1417,6 +1417,7 @@ MonoBehaviour:
   sizeFactor: 3
   minSpeed: 1
   maxSpeed: 13.72
+  maxCurveValue: 150
   loudnessToForceCurve:
     serializedVersion: 2
     m_Curve:
