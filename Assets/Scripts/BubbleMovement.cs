@@ -137,7 +137,7 @@ public class BubbleMovement : MonoBehaviour
         float scale = transform.localScale.x;
         float warningOffset = (maxSize - minSize) * (1f - warningThreshold);
 
-        // 1. 如果 scale > maxSize 或 < minSize => 已破裂
+
         if (scale >= maxSize)
         {
             ChangeBubbleColor(Color.red);
@@ -146,7 +146,7 @@ public class BubbleMovement : MonoBehaviour
                 PopBubble("Bubble popped due to exceeding max size.");
             }
 
-            return; // 这里return避免后续颜色逻辑
+            return;
         }
         else if (scale <= minSize)
         {
@@ -159,36 +159,14 @@ public class BubbleMovement : MonoBehaviour
             return;
         }
 
-        // 2. 判断是否接近 maxSize => 红色闪烁
+
         float maxBoundary = maxSize - warningOffset;
-        //    若 scale >= maxBoundary => 进入闪烁
+
         if (scale >= maxBoundary)
         {
-            // 距离程度 fraction: 0~1
             float distToMax = scale - maxBoundary; // [0 ~ warningOffset]
             float fraction = Mathf.Clamp01(distToMax / warningOffset) * 3; // 0~1
 
-            // // 计算闪烁频率
-            // float baseFreq = 1f; // 基础闪烁频率(可调)
-            // float extraFreq = 6f; // 越接近越增加的闪烁频率(可调)
-            // float finalFreq = baseFreq + extraFreq * fraction;
-            //
-            // // 计算插值
-            // float sinVal = Mathf.Sin(Time.time * finalFreq);
-            // float t = (sinVal + 1f) * 0.5f; // 0~1
-            //
-            // float targetColorG = 128f / 255f;
-            // float originalColorG = 1f;
-            //
-            // float finalColorG = Mathf.Lerp(originalColorG, targetColorG, t);
-            //
-            // Color finalColor = new Color(
-            //     1f,
-            //     finalColorG,
-            //     1f,
-            //     1f
-            // );
-            // ChangeBubbleColor(finalColor);
             animator.SetBool("ChangingMaxColor", true);
             animator.SetFloat("MaxColorAnimSpeed", fraction);
 
@@ -196,42 +174,23 @@ public class BubbleMovement : MonoBehaviour
             return;
         }
 
-        // 3. 判断是否接近 minSize => 黄色闪烁
+
         float minBoundary = minSize + warningOffset;
         if (scale <= minBoundary)
         {
-            // 距离程度 fraction: 0~1
-            float distToMax = scale - maxBoundary; // [0 ~ warningOffset]
-            float fraction = Mathf.Clamp01(distToMax / warningOffset); // 0~1
+            float distToMin = minBoundary - scale; // [0 ~ warningOffset]
+            float fraction = Mathf.Clamp01(distToMin / warningOffset) * 3; // 0~1
 
-            // 计算闪烁频率
-            float baseFreq = 1f; // 基础闪烁频率(可调)
-            float extraFreq = 6f; // 越接近越增加的闪烁频率(可调)
-            float finalFreq = baseFreq + extraFreq * fraction;
-
-            // 计算插值
-            float sinVal = Mathf.Sin(Time.time * finalFreq);
-            float t = (sinVal + 1f) * 0.5f; // 0~1
-
-            float targetColorB = 128f / 255f;
-            float originalColorB = 1f;
-
-            float finalColorB = Mathf.Lerp(originalColorB, targetColorB, t);
-
-            Color finalColor = new Color(
-                1f,
-                1f,
-                finalColorB,
-                1f
-            );
-
-            ChangeBubbleColor(finalColor);
+            animator.SetBool("ChangingMinColor", true);
+            animator.SetFloat("MinColorAnimSpeed", fraction);
             hasPopped = false;
             return;
         }
 
         // 4. 正常范围 => 白色
-        ChangeBubbleColor(Color.white);
+        // ChangeBubbleColor(Color.white);
+        animator.SetBool("ChangingMaxColor", false);
+        animator.SetBool("ChangingMinColor", false);
         hasPopped = false;
     }
 
