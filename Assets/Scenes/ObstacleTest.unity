@@ -1236,7 +1236,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!95 &1907826609
 Animator:
   serializedVersion: 5
@@ -1536,6 +1536,7 @@ MonoBehaviour:
   currentBlowForce: 0
   rotationReturnFactor: 0.3
   angularDragWhileReturning: 20
+  animator: {fileID: 0}
 --- !u!58 &4031424362341966759
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -1612,6 +1613,7 @@ GameObject:
   - component: {fileID: 6300095172152276988}
   - component: {fileID: 9219748390762556927}
   - component: {fileID: 3936730213896891697}
+  - component: {fileID: 9219748390762556928}
   m_Layer: 0
   m_Name: Bubble
   m_TagString: Player
@@ -1698,6 +1700,27 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 668b68617f9cfd146b246d417f426978, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!95 &9219748390762556928
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6559132313775074793}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 45a4c1cdb1ec4df429f58479f86c5601, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
