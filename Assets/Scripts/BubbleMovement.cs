@@ -20,8 +20,8 @@ public class BubbleMovement : MonoBehaviour
 	public float maxSpeed = 5f;
 
 	[Header("Blow Force Curve")]
-	public float maxCurveValue = 150f;
-	public AnimationCurve loudnessToForceCurve = AnimationCurve.EaseInOut(0f, 0f, 5f, 150f);
+	public float maxCurveValue = 500f;
+	public AnimationCurve loudnessToForceCurve = AnimationCurve.EaseInOut(0f, 0f, 5f, 500f);
 
 	[Header("Additional Settings")] public float inertiaDampening = 0.99f;
 	public float maxVelocity = 6f;
@@ -58,6 +58,11 @@ public class BubbleMovement : MonoBehaviour
 		rb.drag = 1f;
 		rb.angularDrag = 0f;
 		animator = GetComponent<Animator>();
+	}
+	
+	private void Start() 
+	{
+		loudnessToForceCurve = AnimationCurve.EaseInOut(0f, 0f, 5f, maxCurveValue);
 	}
 
 	private void Update()

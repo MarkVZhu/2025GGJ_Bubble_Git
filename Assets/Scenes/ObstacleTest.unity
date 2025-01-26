@@ -671,9 +671,29 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 270706690082431028, guid: 2cc0f338523d10043947b50dc44a4f48, type: 3}
+      propertyPath: m_fontSize
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 270706690082431028, guid: 2cc0f338523d10043947b50dc44a4f48, type: 3}
+      propertyPath: m_fontSizeBase
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 2683222984068353938, guid: 2cc0f338523d10043947b50dc44a4f48, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3751891097493906168, guid: 2cc0f338523d10043947b50dc44a4f48, type: 3}
       propertyPath: m_Name
       value: InGameCanvas
+      objectReference: {fileID: 0}
+    - target: {fileID: 3798687111347048772, guid: 2cc0f338523d10043947b50dc44a4f48, type: 3}
+      propertyPath: m_fontSize
+      value: 120
+      objectReference: {fileID: 0}
+    - target: {fileID: 3798687111347048772, guid: 2cc0f338523d10043947b50dc44a4f48, type: 3}
+      propertyPath: m_fontSizeBase
+      value: 120
       objectReference: {fileID: 0}
     - target: {fileID: 6921066679229372617, guid: 2cc0f338523d10043947b50dc44a4f48, type: 3}
       propertyPath: m_Pivot.x
@@ -754,6 +774,14 @@ PrefabInstance:
     - target: {fileID: 6921066679229372617, guid: 2cc0f338523d10043947b50dc44a4f48, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7238404165359632327, guid: 2cc0f338523d10043947b50dc44a4f48, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 280.5695
+      objectReference: {fileID: 0}
+    - target: {fileID: 7238404165359632327, guid: 2cc0f338523d10043947b50dc44a4f48, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -165.24329
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1409,15 +1437,15 @@ MonoBehaviour:
   loudnessSensibility: 100
   useVoiceDetect: 1
   inflateRate: 0.8
-  shrinkRate: 0.1
+  shrinkRate: 0.08
   minSize: 0.3
   maxSize: 1.5
   warningThreshold: 0.75
-  baseSpeed: 8.36
+  baseSpeed: 9
   sizeFactor: 3
   minSpeed: 1
-  maxSpeed: 13.72
-  maxCurveValue: 150
+  maxSpeed: 20
+  maxCurveValue: 450
   loudnessToForceCurve:
     serializedVersion: 2
     m_Curve:
@@ -1431,8 +1459,8 @@ MonoBehaviour:
       inWeight: 0.33333334
       outWeight: 0.33333334
     - serializedVersion: 3
-      time: 5
-      value: 125
+      time: 0.5176873
+      value: 1956.1572
       inSlope: 0
       outSlope: 0
       tangentMode: 136
@@ -1443,7 +1471,7 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   inertiaDampening: 0.99
-  maxVelocity: 150
+  maxVelocity: 300
   wobbleFrequency: 1
   wobbleAmplitude: 0.3
   inflateRadius: 0.5
