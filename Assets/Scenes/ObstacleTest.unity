@@ -1352,7 +1352,7 @@ GameObject:
   - component: {fileID: 2009287230}
   - component: {fileID: 2009287232}
   m_Layer: 0
-  m_Name: ObstacleSpawner
+  m_Name: LevelSpawner
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1427,11 +1427,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d162e6a7073652440801dbcf51348d8c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  backgroundPrefabs: []
-  cameraTransform: {fileID: 0}
-  backgroundHeight: 10
-  initialOffset: 1
-  obstacleSpawner: {fileID: 0}
+  backgroundPrefabs:
+  - {fileID: 3689819026546036306, guid: 8671e34fcb1809544a1976b28402325d, type: 3}
+  - {fileID: 3689819026546036306, guid: 234746a7ddc31a645a113e0e7ed65831, type: 3}
+  - {fileID: 3689819026546036306, guid: 5c0c5987188aa264789382063efb39c6, type: 3}
+  cameraTransform: {fileID: 1682548409}
+  backgroundHeight: 49.57
+  initialOffset: 0
 --- !u!1 &2138119113
 GameObject:
   m_ObjectHideFlags: 0
