@@ -795,6 +795,14 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.x
       value: -165.24329
       objectReference: {fileID: 0}
+    - target: {fileID: 7241280065299760033, guid: 2cc0f338523d10043947b50dc44a4f48, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7241280065299760033, guid: 2cc0f338523d10043947b50dc44a4f48, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 9215051422402755752, guid: 2cc0f338523d10043947b50dc44a4f48, type: 3}
       propertyPath: m_AnchoredPosition.x
       value: 60
