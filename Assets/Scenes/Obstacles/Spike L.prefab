@@ -148,4 +148,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   minSpawnLevel: 0
-  maxSpawnLevel: 10
+  maxSpawnLevel: 15

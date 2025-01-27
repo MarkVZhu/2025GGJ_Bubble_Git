@@ -29,7 +29,7 @@ public class ScreenWrap : MonoBehaviour
 		//
 		// // Prevent the bubble from moving below the bottom of the screen
 		float cameraBottomY = Camera.main.transform.position.y - screenHeight / 2f;
-		if (position.y < cameraBottomY)
+		if (GameManager.Instance.CurrentState == GameManager.GameState.Playing && position.y < cameraBottomY)
 		{
 			position.y = cameraBottomY; // Clamp to the bottom of the screen
 			Debug.Log("Bubble popped due to touch the bottom.");

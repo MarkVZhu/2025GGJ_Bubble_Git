@@ -133,5 +133,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a295a3aa1e3e6324ea81c4e5ef7f8014, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  minSpawnLevel: 3
+  minSpawnLevel: 2
   maxSpawnLevel: 20

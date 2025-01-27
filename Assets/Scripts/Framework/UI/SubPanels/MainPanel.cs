@@ -68,6 +68,7 @@ public class MainPanel : BasePanel {
 				break;
 			case "btnQuit":
 				Debug.Log("btnQuit被点击");
+				Application.Quit();
 				break;
 		}
 	}
