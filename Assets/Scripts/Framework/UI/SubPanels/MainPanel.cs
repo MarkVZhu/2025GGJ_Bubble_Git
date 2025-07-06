@@ -66,6 +66,11 @@ public class MainPanel : BasePanel {
 				UIManager.Instance.HidePanel("MainPanel");
 				UIManager.Instance.ShowPanel<InstructionPanel>("InstructionPanel");
 				break;
+			case "btnSet":
+				Debug.Log("btnSet被点击");
+				UIManager.Instance.HidePanel("MainPanel");
+				UIManager.Instance.ShowPanel<SettingPanel>("SettingPanel");
+				break;
 			case "btnQuit":
 				Debug.Log("btnQuit被点击");
 				Application.Quit();

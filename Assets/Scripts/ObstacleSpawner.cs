@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class ObstacleSpawner : MonoBehaviour
@@ -40,6 +41,9 @@ public class ObstacleSpawner : MonoBehaviour
 	public float leftTimer = 0f;
 	public float centerTimer = 0f;
 	public float rightTimer = 0f;
+	private Vector3 lastCheckPosition;
+	private Vector2 lastBoxSize;
+
 
 	private float screenWidth; // Horizontal world bounds
 	private float screenHeight; // Vertical world bounds
@@ -53,6 +57,8 @@ public class ObstacleSpawner : MonoBehaviour
 
 	void Start()
 	{
+		Application.targetFrameRate = 60;
+	
 		// Dynamically calculate screen bounds based on the camera
 		Camera mainCamera = Camera.main;
 		screenHeight = mainCamera.orthographicSize * 2f; // Vertical size is twice the orthographic size
@@ -76,7 +82,7 @@ public class ObstacleSpawner : MonoBehaviour
 		progressTracker = FindObjectOfType<ProgressTracker>();
 	}
 
-	void Update()
+	void FixedUpdate()
 	{
 		float cameraSpeed = cameraTransform.position.y - lastCameraPosition.y;
 		if (IsCameraMovingUpwards())
@@ -138,9 +144,9 @@ public class ObstacleSpawner : MonoBehaviour
 			return; // Pause timers if bubble is moving too slowly or downwards
 		}
 
-		leftTimer -= Time.deltaTime;
-		centerTimer -= Time.deltaTime;
-		rightTimer -= Time.deltaTime;
+		leftTimer -= Time.fixedDeltaTime;
+		centerTimer -= Time.fixedDeltaTime;
+		rightTimer -= Time.fixedDeltaTime;
 
 		if (leftTimer <= 0f || centerTimer <= 0f || rightTimer <= 0f)
 		{
@@ -160,9 +166,9 @@ public class ObstacleSpawner : MonoBehaviour
 			return; // Pause timers if the camera is moving too slowly or downwards
 		}
 
-		leftTimer -= Time.deltaTime;
-		centerTimer -= Time.deltaTime;
-		rightTimer -= Time.deltaTime;
+		leftTimer -= Time.fixedDeltaTime;
+		centerTimer -= Time.fixedDeltaTime;
+		rightTimer -= Time.fixedDeltaTime;
 
 		// Limit the number of lanes that can spawn obstacles at the same time
 		int lanesSpawned = 0;
@@ -196,9 +202,9 @@ public class ObstacleSpawner : MonoBehaviour
 			return; // Pause timers if bubble is moving too slowly or downwards
 		}
 
-		leftTimer -= Time.deltaTime;
-		centerTimer -= Time.deltaTime;
-		rightTimer -= Time.deltaTime;
+		leftTimer -= Time.fixedDeltaTime;
+		centerTimer -= Time.fixedDeltaTime;
+		rightTimer -= Time.fixedDeltaTime;
 
 		// Each lane spawns obstacles independently
 		if (leftTimer <= 0f)
@@ -266,16 +272,22 @@ public class ObstacleSpawner : MonoBehaviour
 		}
 
 		// Calculate the spawn position above the camera
-		float spawnY = Camera.main.transform.position.y + screenHeight / 2f + 1f; // Spawn 1 unit above the top of the visible screen
+		float spawnY = Camera.main.transform.position.y + screenHeight / 2f + 5f; // Spawn 1 unit above the top of the visible screen
 
 		Vector3 spawnPosition = new Vector3(xPosition, spawnY, 0f);
 
 		// Instantiate the selected obstacle if valid
 		if (selectedObstacle != null)
 		{
+
 			GameObject obstacle = Instantiate(selectedObstacle, spawnPosition, selectedObstacle.transform.rotation);
 			obstacle.AddComponent<DestroyOffScreen>().Initialize(Camera.main, screenHeight);
-
+			// 20% 概率旋转 90 度
+			if (Random.value < 0.2f) 
+			{
+				obstacle.transform.Rotate(0f, 0f, 90f);
+			}
+			
 			// Check for nearby obstacles and delete one if necessary
 			CheckForNearbyObstacles(obstacle);
 		}
@@ -283,19 +295,43 @@ public class ObstacleSpawner : MonoBehaviour
 
 	void CheckForNearbyObstacles(GameObject currentObstacle)
 	{
-		float checkRadius = 1f; // Adjust the radius as needed
-		Collider2D[] nearbyObstacles = Physics2D.OverlapCircleAll(currentObstacle.transform.position, checkRadius);
+		Vector2 boxSize = new Vector2(8f, 1.2f); // Adjust the radius as needed
+		// 记录检测范围的数据
+		lastCheckPosition = currentObstacle.transform.position;
+		lastBoxSize = boxSize;
+		
+		Collider2D[] nearbyObstacles = Physics2D.OverlapBoxAll(
+			currentObstacle.transform.position, // 盒体中心
+			boxSize, // 盒体的宽高
+			0f // 旋转角度（保持不旋转）
+		).Where(obstacle => obstacle.tag != "Player" && obstacle.tag != "Wall").ToArray();
+
+		Debug.Log("nearbyObstacles.Length " + nearbyObstacles.Length);
+		
+		if(nearbyObstacles.Length == 1 && difficultyLevel >= mediumModeThreshold)
+		{
+			//两成概率旋转障碍
+		    if(Random.value < 0.2f)
+		    {
+		        // TODO:启动旋转脚本
+				if (currentObstacle.GetComponent<RotateObstacle>() == null)
+				{
+					currentObstacle.AddComponent<RotateObstacle>();
+				}
+		    }
+		}
 
 		int nearbyCount = 0;
-
+		//FIXME:逻辑有问题，如果按照左中右的方式生成，中间的不会被删除，改成1
 		foreach (Collider2D obstacle in nearbyObstacles)
 		{
-			if (obstacle.gameObject != currentObstacle && obstacle.transform.position.y > cameraTransform.position.y + screenHeight / 2f)
+			//if (obstacle.gameObject != currentObstacle && obstacle.transform.position.y > cameraTransform.position.y + screenHeight / 2f)
+			if (obstacle.gameObject != currentObstacle && obstacle.tag != "Player" && obstacle.tag != "Wall")
 			{
 				nearbyCount++;
 
 				// If more than two obstacles are nearby, randomly remove one
-				if (nearbyCount > 2)
+				if (nearbyCount > 1)
 				{
 					Destroy(obstacle.gameObject);
 					break; // Ensure only one obstacle is removed
@@ -303,6 +339,13 @@ public class ObstacleSpawner : MonoBehaviour
 			}
 		}
 	}
+	
+	void OnDrawGizmos()
+	{
+		Gizmos.color = Color.red;
+		Gizmos.DrawWireCube(lastCheckPosition, lastBoxSize);
+	}
+
 	
 	public int CheckDifficulty()
 	{
@@ -328,9 +371,25 @@ public class DestroyOffScreen : MonoBehaviour
 	void Update()
 	{
 		// Check if the obstacle is below the bottom of the screen
-		if (transform.position.y < mainCamera.transform.position.y - screenHeight / 2f - 1f)
+		if (transform.position.y < mainCamera.transform.position.y - screenHeight / 2f - 10f)
 		{
 			Destroy(gameObject);
 		}
 	}
+}
+
+public class RotateObstacle : MonoBehaviour
+{
+    public float rotationSpeed; // 旋转速度
+	
+    void Start()
+    {
+        rotationSpeed = Random.Range(50, 100);
+        rotationSpeed = Random.value > 0.5f ? rotationSpeed : -rotationSpeed;
+    }
+
+    void Update()
+    {
+        transform.Rotate(Vector3.forward * rotationSpeed * Time.deltaTime);
+    }
 }

@@ -62,17 +62,20 @@ public class BubbleMovement : MonoBehaviour
 	
 	private void Start() 
 	{
+		loudnessSensibility = CurrentSen.Instance.currentSen;
 		loudnessToForceCurve = AnimationCurve.EaseInOut(0f, 0f, 5f, maxCurveValue);
 	}
 
 	private void Update()
 	{
-		if (Input.GetKeyDown(KeyCode.P))
+		if (Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(KeyCode.P))
 		{
 			GameManager.Instance.PauseGame();
 		}
 
 		if (GameManager.Instance.IsGameRunning) BubbleMove();
+		
+		if (GameManager.Instance.CurrentState == GameManager.GameState.Ended) GetComponent<CircleCollider2D>().enabled = false;
 	}
 
 	private void BubbleMove()

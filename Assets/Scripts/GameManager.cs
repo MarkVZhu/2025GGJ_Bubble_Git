@@ -32,12 +32,6 @@ public class GameManager : SingletonMono<GameManager>
 		SoundMgr.Instance.PlayBKMusic("BGM_BUB");
 		UIManager.Instance.ShowPanel<MainPanel>("MainPanel");
 	}
-
-	// Update is called once per frame
-	void Update()
-	{
-		
-	}
 	
 	public void ChangeState(GameState newState)
 	{
@@ -108,7 +102,7 @@ public class GameManager : SingletonMono<GameManager>
 		{
 			ChangeState(GameState.Playing);
 			EventCenter.Instance.EventTrigger(E_EventType.E_InGame_Cursor);
-			SoundMgr.Instance.PlayBKMusic("PausePanel");
+			SoundMgr.Instance.PlayBKMusic("BGM_BUB");
 		}
 	}
 	
